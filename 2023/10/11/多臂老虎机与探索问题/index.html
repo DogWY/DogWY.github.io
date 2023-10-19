@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>多臂老虎机与探索问题 | 狗东西's博客</title><meta name="author" content="DogWY"><meta name="copyright" content="DogWY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="多臂老虎机与探索问题  文章逻辑: 1. 描述老虎机问题 2. 描述老虎机问题求解的一般过程 3. 介绍纯贪心策略和\(\epsilon\)-greedy策略 4. 引入强化学习的基本问题: 平衡探索与利用 5. 介绍常用的平衡探索和利用的方法  老虎机问题的描述   Alt text   每台老虎机的期望收益不同, 假设中一次大奖100元,其他情况均没有钱 四台机器中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多臂老虎机与探索问题">
+<meta property="og:url" content="https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="狗东西&#39;s博客">
+<meta property="og:description" content="多臂老虎机与探索问题  文章逻辑: 1. 描述老虎机问题 2. 描述老虎机问题求解的一般过程 3. 介绍纯贪心策略和\(\epsilon\)-greedy策略 4. 引入强化学习的基本问题: 平衡探索与利用 5. 介绍常用的平衡探索和利用的方法  老虎机问题的描述   Alt text   每台老虎机的期望收益不同, 假设中一次大奖100元,其他情况均没有钱 四台机器中">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png">
+<meta property="article:published_time" content="2023-10-11T02:00:07.000Z">
+<meta property="article:modified_time" content="2023-10-19T13:14:53.649Z">
+<meta property="article:author" content="DogWY">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="高级强化学习课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '多臂老虎机与探索问题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-19 21:14:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/theme/logo01.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png')"><nav id="nav"><span id="blog-info"><a href="/" title="狗东西's博客"><span class="site-name">狗东西's博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">多臂老虎机与探索问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-11T02:00:07.000Z" title="Created 2023-10-11 10:00:07">2023-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-19T13:14:53.649Z" title="Updated 2023-10-19 21:14:53">2023-10-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="多臂老虎机与探索问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="多臂老虎机与探索问题">多臂老虎机与探索问题</h1>
+<blockquote>
+<p>文章逻辑: 1. 描述老虎机问题 2. 描述老虎机问题求解的一般过程 3.
+介绍纯贪心策略和<span class="math inline">\(\epsilon\)</span>-greedy策略
+4. 引入强化学习的基本问题: 平衡探索与利用 5.
+介绍常用的平衡探索和利用的方法</p>
+</blockquote>
+<h2 id="老虎机问题的描述">老虎机问题的描述</h2>
+<figure>
+<img src="image.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<ul>
+<li>每台老虎机的期望收益不同, 假设中一次大奖100元,其他情况均没有钱</li>
+<li>四台机器中大奖的概率分别为1%, 5%, 10%和20%</li>
+<li>每拉一次拉杆需要10元, 而你共有1000元,
+在不知道每台机器的期望收益的情况下, 如何让拉100次拉杆赚的更多?</li>
+</ul>
+<h3 id="形式描述">形式描述</h3>
+<p>多臂老虎机(multi-arm bandit)问题:</p>
+<ul>
+<li><p>动作集合: <span class="math inline">\(a^i \in \mathcal{A},
+i=1,\dots,K\)</span></p></li>
+<li><p>奖励概率分布: <span class="math inline">\(\mathcal{R}(r|a^i) =
+\mathbb{P}(r|a^i)\)</span></p></li>
+<li><p>目标: 最大化累计奖励<span class="math inline">\(\max
+\sum\limits_{t=1}^{T} r_t, r_t \sim
+\mathcal{R}(\cdot|a_t)\)</span></p></li>
+<li><p>问题:
+每次选择拉哪个摇臂的时候，如果能有一个什么样的东西辅助我们来做决定就好了呢？</p></li>
+</ul>
+<h2
+id="如何对多臂老虎机问题进行收益估计">如何对多臂老虎机问题进行收益估计</h2>
+<p>假如某台老虎机我们已经尝试了<span
+class="math inline">\(n-1\)</span>次,
+那么它的期望收益可以用如下公式评估:</p>
+<p><span class="math display">\[
+Q_n(a^i) = \frac{r_1 + r_2 + ... + r_{n-1}}{n-1}
+\]</span></p>
+<blockquote>
+<p>这是一个很符合直觉的评估公式, 但是如果每一轮都使用以上公式进行评估,
+我们每次计算<span
+class="math inline">\(Q\)</span>的时间复杂度就变成了<span
+class="math inline">\(O(n)\)</span>, 空间复杂度也为<span
+class="math inline">\(O(n)\)</span></p>
+</blockquote>
+<p>我们更进一步的使用了上述公式的增量实现:</p>
+<p><span class="math display">\[
+Q_{n+1}(a^i) := \frac{1}{n}\sum\limits_{i=1}^{n} = \frac{1}{n}(r_n +
+\frac{n-1}{n-1}\sum\limits_{n-1}^{i=1} r_i) = \frac{1}{n} r_n +
+\frac{n-1}{n} Q_n = Q_n(a^i) + \frac{1}{n} (r_n - Q_n(a^i))
+\]</span></p>
+<blockquote>
+<p>这样, 每次我们计算<span class="math inline">\(Q\)</span>时,
+每次计算的复杂度为<span class="math inline">\(O(1)\)</span>,
+空间复杂度也为<span class="math inline">\(O(1)\)</span></p>
+</blockquote>
+<h2 id="求解多臂老虎机问题">求解多臂老虎机问题</h2>
+<p>当我们能够评估每台老虎机的期望收益时,
+我们可以如何利用它来做决策呢?</p>
+<p>解决思路:</p>
+<ol type="1">
+<li>给每个摇臂/老虎机初始化一个期望收益, 例如都初始化为0</li>
+<li>每次按照贪心的策略, 选择期望收益最大的摇臂,
+如果有一样的就随机选一个</li>
+<li>执行一次获得反馈后, 更新对应摇臂/老虎机的期望收益估计</li>
+<li>重复执行<code>2.</code>和<code>3.</code>步, 直到花光预算</li>
+</ol>
+<blockquote>
+<p>这是一个朴素的解决思路, 简单的说就是: 边利用当前收益评估来决策,
+边用反馈更新每台老虎机的期望收益评估</p>
+</blockquote>
+<p>用伪代码的形式表述如下:</p>
+<ol type="1">
+<li>初始化: <span class="math inline">\(Q(a^i) := 0, N(a^i) = 0, i =
+1,\dots, n\)</span>. 共有<span
+class="math inline">\(n\)</span>个老虎机</li>
+<li>主循环 <span class="math inline">\(t = 1:T\)</span>
+<ol type="1">
+<li>利用策略<span class="math inline">\(\pi\)</span>选取某个动作,
+记为<span class="math inline">\(a_t\)</span></li>
+<li>获取收益: <span class="math inline">\(r_t =
+Bandit(a_t)\)</span></li>
+<li>更新计数器: <span class="math inline">\(N(a_t) := N(a_t) +
+1\)</span></li>
+<li>更新估值: <span class="math inline">\(Q(a_t) := Q(a_t) +
+\frac{1}{N(a_t)} [r_t - Q(a_t)]\)</span></li>
+</ol></li>
+</ol>
+<blockquote>
+<p><span class="math inline">\(Q(a)\)</span>为价值函数, 指在某个状态下,
+选择某个动作获得回报的期望</p>
+<p><span class="math inline">\(a_t\)</span>并不是指第<span
+class="math inline">\(t\)</span>个老虎机, 而是指第<span
+class="math inline">\(t\)</span>步所选择的那个老虎机</p>
+<p><span class="math inline">\(T\)</span>指总预算数</p>
+</blockquote>
+<h2 id="贪心可能面临的问题">贪心可能面临的问题</h2>
+<p>贪心的本质是对眼前最好选择的极致<strong>利用</strong>.</p>
+<p>贪心策略的缺点是:
+即使你已知贪心认为的最好的选择可能并不是真正最好的选择,
+但是继续贪心已经无法跳出当前状态.</p>
+<p>这个时候我们希望能够跳出眼前的最好选择,
+适当进行更大范围的<strong>探索</strong>.</p>
+<h3
+id="强化学习的一个基本问题探索与利用的平衡">强化学习的一个基本问题——探索与利用的平衡</h3>
+<p>强化学习的基本问题:
+如何平衡探索(exploration)与利用(exploitation)?</p>
+<ul>
+<li>探索: 尝试不同的选择寻找最优</li>
+<li>利用: 基于当前策略, 执行能够获得已知最优收益的决策</li>
+</ul>
+<h3 id="引入探索策略">引入探索策略</h3>
+<ul>
+<li>纯贪心策略</li>
+</ul>
+<blockquote>
+<p>对应伪代码中策略<span
+class="math inline">\(\pi\)</span>为贪心策略(greedy)</p>
+</blockquote>
+<p>首先对每一个<span class="math inline">\(a^i\)</span>计算:</p>
+<p><span class="math display">\[
+Q(a^i) = \frac{1}{N(a^i)} \sum\limits_{t=1}^{T} r_t \cdot 1(a_t = a^i)
+\]</span></p>
+<p>然后基于贪心思想选取动作:</p>
+<p><span class="math display">\[
+a^* = \mathop{\arg\max}\limits_{a^i} Q(a^i)
+\]</span></p>
+<blockquote>
+<p>其中:</p>
+<ul>
+<li><span class="math inline">\(r_t\)</span>: 代表<span
+class="math inline">\(t\)</span>时刻选择动作<span
+class="math inline">\(a_t\)</span>获得的奖励</li>
+<li><span class="math inline">\(1(a_t = a^i)\)</span>: 代表当<span
+class="math inline">\(a_t = a^i\)</span>时返回<span
+class="math inline">\(1\)</span>, 其他情况返回<span
+class="math inline">\(0\)</span></li>
+<li><span class="math inline">\(N(a^i)\)</span>: 代表从<span
+class="math inline">\(1\)</span>到<span
+class="math inline">\(T\)</span>中<span
+class="math inline">\(a^i\)</span>出现过的总次数</li>
+</ul>
+</blockquote>
+<ul>
+<li>引入探索的贪心策略(<span
+class="math inline">\(\epsilon\)</span>-greedy策略)</li>
+</ul>
+<p>此策略下, 我们选取动作的步骤为:</p>
+<p><span class="math display">\[
+a_t = \begin{cases}
+    \mathop{\arg\max}\limits_{a} Q(a) &amp; 采样概率: 1 - \epsilon \\
+    U(0, |\mathcal{A}|) &amp; 采样概率: \epsilon
+\end{cases}
+\]</span></p>
+<blockquote>
+<p>其中:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{A}\)</span>: 代表动作空间</li>
+<li><span class="math inline">\(|\mathop{A}|\)</span>:
+代表可选动作的个数</li>
+<li><span class="math inline">\(U\)</span>: 代表均匀分布</li>
+</ul>
+</blockquote>
+<h3 id="引入regret后悔值">引入<code>Regret</code>后悔值</h3>
+<p>每个决策的期望收益: <span class="math inline">\(Q(a^i) =
+\mathbb{E}_{r\sim \mathbb{P}(r|a^i)}[r]\)</span></p>
+<p>最优决策的期望: <span class="math inline">\(Q^* = \max\limits_{a^i
+\in \mathcal{A}}Q(a^i)\)</span></p>
+<p><code>Regret</code>就是决策与最优决策的期望收益差: <span
+class="math inline">\(R(a^i) = Q^* - Q(a^i)\)</span></p>
+<p><code>Total Regret</code>累计懊悔函数: <span
+class="math inline">\(\sigma_R = \mathbb{E}_{a \sim
+\pi}|\sum\limits_{t=1}^{T}R(a^i_t)|\)</span></p>
+<blockquote>
+<p><span class="math inline">\(\mathbb{E}_{a \sim
+\pi}|\sum\limits_{t=1}^{T}R(a^i_t)|\)</span>不是指对累积的结果求平均,
+而是对<span class="math inline">\(R(a^i_t)\)</span>求平均(即<span
+class="math inline">\(\sum\limits_{t=1}^{T}R(a^i_t) / T\)</span>)</p>
+</blockquote>
+<p>现在我们就可以得到纯策略和<span
+class="math inline">\(\epsilon\)</span>-greedy策略下的累计懊悔函数:</p>
+<ul>
+<li>贪心策略</li>
+</ul>
+<p><span class="math display">\[
+\sigma_R \propto T \cdot [Q(a^i) - Q^*]
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\propto\)</span>: 代表线性增长</p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(\epsilon\)</span>-greedy策略</li>
+</ul>
+<p><span class="math display">\[
+\sigma_R \ge \frac{\epsilon}{|\mathcal{A}|}\sum \limits_{a\in
+\mathcal{A}} \bigtriangleup_a
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\bigtriangleup_a\)</span>: 每个<span
+class="math inline">\(a\)</span>的期望收益与最优期望收益差</p>
+</blockquote>
+<blockquote>
+<p>在<span
+class="math inline">\(Q(a)\)</span>学到了最优策略时上式取等</p>
+</blockquote>
+<blockquote>
+<p>上式给出了<span
+class="math inline">\(\epsilon\)</span>-greedy策略的懊悔值下限</p>
+</blockquote>
+<h2 id="探索与利用的平衡">探索与利用的平衡</h2>
+<p><span
+class="math inline">\(\epsilon\)</span>-greedy策略通过引入一定概率的随机探索,
+使我们可以跳出局部最优. 出了这种随机探索, 我们还有一些别的探索方法:</p>
+<h3 id="乐观初始化法">乐观初始化法</h3>
+<p>方法: 给每个动作的<span
+class="math inline">\(Q(a^i)\)</span>一个较高的初始化值</p>
+<p>原理: 尝试次数较少的动作将受到鼓励</p>
+<h3 id="显式地考虑动作的价值分布法">显式地考虑动作的价值分布法</h3>
+<p>观察下图:</p>
+<figure>
+<img src="image-1.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<p>然后更改策略为:</p>
+<p><span class="math display">\[
+\pi: a = \mathop{\arg\max}\limits_{a\in \mathcal{A}}(\hat{Q}(a) +
+\hat{U}(a))
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\hat{U}(a)\)</span>代表此时动作<span
+class="math inline">\(a\)</span>的不确定性</p>
+</blockquote>
+<p>此时, <span class="math inline">\(N(a)\)</span>越大, <span
+class="math inline">\(U(a)\)</span>越小, 也就是动作<span
+class="math inline">\(a\)</span>被尝试次数越多, 其不确定度越小,
+更不容易被选择.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://dogwy.github.io">DogWY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/">https://dogwy.github.io/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%BA%A7%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B/">高级强化学习课程</a></div><div class="post_share"><div class="social-share" data-image="/2023/10/11/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/13/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/" title="马尔可夫决策过程"><img class="cover" src="/2023/10/13/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">马尔可夫决策过程</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="强化学习基本概念"><img class="cover" src="/2023/10/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">强化学习基本概念</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/10/16/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95/" title="动态规划算法"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">动态规划算法</div></div></a></div><div><a href="/2023/10/16/%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="基于值函数的无模型强化学习"><img class="cover" src="/2023/10/16/%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/image.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">基于值函数的无模型强化学习</div></div></a></div><div><a href="/2023/10/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="强化学习基本概念"><img class="cover" src="/2023/10/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">强化学习基本概念</div></div></a></div><div><a href="/2023/10/13/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/" title="马尔可夫决策过程"><img class="cover" src="/2023/10/13/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">马尔可夫决策过程</div></div></a></div><div><a href="/2023/10/06/Logistic%E5%9B%9E%E5%BD%92/" title="Logistic回归"><img class="cover" src="/2023/10/06/Logistic%E5%9B%9E%E5%BD%92/image-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-06</div><div class="title">Logistic回归</div></div></a></div><div><a href="/2023/09/30/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" title="线性模型"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-30</div><div class="title">线性模型</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98"><span class="toc-text">多臂老虎机与探索问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%81%E8%99%8E%E6%9C%BA%E9%97%AE%E9%A2%98%E7%9A%84%E6%8F%8F%E8%BF%B0"><span class="toc-text">老虎机问题的描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E6%8F%8F%E8%BF%B0"><span class="toc-text">形式描述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E9%97%AE%E9%A2%98%E8%BF%9B%E8%A1%8C%E6%94%B6%E7%9B%8A%E4%BC%B0%E8%AE%A1"><span class="toc-text">如何对多臂老虎机问题进行收益估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E9%97%AE%E9%A2%98"><span class="toc-text">求解多臂老虎机问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83%E5%8F%AF%E8%83%BD%E9%9D%A2%E4%B8%B4%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">贪心可能面临的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%88%A9%E7%94%A8%E7%9A%84%E5%B9%B3%E8%A1%A1"><span class="toc-text">强化学习的一个基本问题——探索与利用的平衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="toc-text">引入探索策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5regret%E5%90%8E%E6%82%94%E5%80%BC"><span class="toc-text">引入Regret后悔值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%88%A9%E7%94%A8%E7%9A%84%E5%B9%B3%E8%A1%A1"><span class="toc-text">探索与利用的平衡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B3%95"><span class="toc-text">乐观初始化法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E5%9C%B0%E8%80%83%E8%99%91%E5%8A%A8%E4%BD%9C%E7%9A%84%E4%BB%B7%E5%80%BC%E5%88%86%E5%B8%83%E6%B3%95"><span class="toc-text">显式地考虑动作的价值分布法</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By DogWY</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

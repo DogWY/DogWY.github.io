@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第二章枚举 | 狗东西's博客</title><meta name="author" content="DogWY"><meta name="copyright" content="DogWY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第二章 枚举 1.1 枚举基本原理 枚举算法也称之为穷举算法，就是按照问题本身的性质，一 一列举出该问题所有可能的解，并在列举的过程中，逐一检验每个可能解是否是问题的真正解。若是则采纳个解；否则抛弃它。 一般情况下:  枚举算法的解准确和全面 实现简单, 通过循环&#x2F;递归实现 执行效率提升空间往往比较大  枚举基本步骤  确定枚举对象 逐一列举可能解 逐一验证可能接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二章枚举">
+<meta property="og:url" content="https://dogwy.github.io/2023/10/19/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%9E%9A%E4%B8%BE/index.html">
+<meta property="og:site_name" content="狗东西&#39;s博客">
+<meta property="og:description" content="第二章 枚举 1.1 枚举基本原理 枚举算法也称之为穷举算法，就是按照问题本身的性质，一 一列举出该问题所有可能的解，并在列举的过程中，逐一检验每个可能解是否是问题的真正解。若是则采纳个解；否则抛弃它。 一般情况下:  枚举算法的解准确和全面 实现简单, 通过循环&#x2F;递归实现 执行效率提升空间往往比较大  枚举基本步骤  确定枚举对象 逐一列举可能解 逐一验证可能接">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dogwy.github.io/images/theme/defaultCover.png">
+<meta property="article:published_time" content="2023-10-19T07:56:44.000Z">
+<meta property="article:modified_time" content="2023-10-19T14:51:35.412Z">
+<meta property="article:author" content="DogWY">
+<meta property="article:tag" content="算法设计与分析课程">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogwy.github.io/images/theme/defaultCover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dogwy.github.io/2023/10/19/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%9E%9A%E4%B8%BE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第二章枚举',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-19 22:51:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/theme/logo01.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/./images/theme/defaultCover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="狗东西's博客"><span class="site-name">狗东西's博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第二章枚举</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-19T07:56:44.000Z" title="Created 2023-10-19 15:56:44">2023-10-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-19T14:51:35.412Z" title="Updated 2023-10-19 22:51:35">2023-10-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第二章枚举"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第二章-枚举">第二章 枚举</h1>
+<h2 id="枚举基本原理">1.1 枚举基本原理</h2>
+<p>枚举算法也称之为穷举算法，就是按照问题本身的性质，<strong>一
+一列举</strong>出该问题所有可能的解，并在列举的过程中，<strong>逐一检验</strong>每个可能解是否是问题的真正解。若是则采纳个解；否则抛弃它。</p>
+<p>一般情况下:</p>
+<ul>
+<li>枚举算法的解准确和全面</li>
+<li>实现简单, 通过循环/递归实现</li>
+<li>执行效率提升空间往往比较大</li>
+</ul>
+<h3 id="枚举基本步骤">枚举基本步骤</h3>
+<ol type="1">
+<li>确定枚举对象</li>
+<li>逐一列举可能解</li>
+<li>逐一验证可能接</li>
+</ol>
+<h2 id="模糊数字匹配">2.2 模糊数字匹配</h2>
+<h3 id="任务描述">任务描述</h3>
+<p>一张单据上有一个5位数的编码，因为保管不善，其百位数已经变得模糊不请。但是知道这个5位数是57和67的倍数。现在要设计一个算法，输出所有满足这些条件的5位数，并统计这样的数的个数。</p>
+<p><strong>输入</strong>:</p>
+<p>每一行对应一个测试样例，每一行包含4个数字，依次是万位数，千位数，十位数和个位数。最后一行包含4个-1，表示输入结束。</p>
+<p><strong>输出</strong>:</p>
+<p>每组测试样例的结果输出占一行，第一个数字表示满足条件的编码个数，后面按升序输出所有满足条件的编码，数字与数字之间用空格隔开。</p>
+<figure>
+<img src=".//image-20231019192311861.png"
+alt="image-20231019192311861" />
+<figcaption aria-hidden="true">image-20231019192311861</figcaption>
+</figure>
+<h3 id="问题分析">问题分析</h3>
+<ol type="1">
+<li><p>枚举对象: <span class="math inline">\(Obj(h)\)</span>即百位数字,
+<span class="math inline">\(h \in [0,9]\)</span></p></li>
+<li><p>逐一列举<code>for(int h = 0;h &lt; 10;h++)</code></p></li>
+<li><p>逐一验证: <span class="math inline">\(19h95\)</span>能否整除<span
+class="math inline">\(57\)</span>和<span
+class="math inline">\(67\)</span></p></li>
+</ol>
+<h2 id="百钱百鸡问题">2.3 百钱百鸡问题</h2>
+<h3 id="任务描述-1">任务描述</h3>
+<p>我国古代数学家张丘建在《算经》中出了一道题“鸡翁一，值钱五；鸡母一，值钱三；鸡雏三，值钱一。百钱买百鸡，问鸡翁、鸡母、鸡雏各几何？”，现在假定各鸡种的价格不变，拥有的钱数为m，需要购买的鸡数为n，试求出所有可能的购买方案总数。</p>
+<p><strong>输入</strong>:</p>
+<p>每行对应一个测试样例，每一行包含2个数字，分别为n 和m
+。最后一行包含2个-1，表示输入结束。</p>
+<p><strong>输出</strong>:</p>
+<p>每组测试样例的结果输出占一行，输出可能购买方案总数。</p>
+<h3 id="问题分析-1">问题分析</h3>
+<ol type="1">
+<li><p>枚举对象：<span
+class="math inline">\(Obj(n_1,n_2,n_3)\)</span></p>
+<p>鸡翁数，记为<span class="math inline">\(n_1, n1=0\sim n\)</span></p>
+<p>鸡母数，记为<span class="math inline">\(n_2, n_2=0\sim n\)</span></p>
+<p>鸡雏数，记为<span class="math inline">\(n_3,n_3=0\sim
+n\)</span></p></li>
+<li><p>注意列举</p></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(n1=<span class="number">0</span>; n1&lt;=n; n1++)</span><br><span class="line">    <span class="keyword">for</span>(n2=<span class="number">0</span>; n2&lt;=n; n2++)</span><br><span class="line">        <span class="keyword">for</span>(n3=<span class="number">0</span>; n3&lt;=n; n3++)</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>逐一验证</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n1 + n2 + n3 == n;</span><br><span class="line"><span class="number">5</span>n1 + <span class="number">3</span>n2 + n3 / <span class="number">3</span> == m;</span><br></pre></td></tr></table></figure>
+<h2 id="数组配对">2.4 数组配对</h2>
+<h3 id="任务描述-2">任务描述</h3>
+<p>给你一个长度为<span class="math inline">\(n\)</span> 的数组 <span
+class="math inline">\(A\)</span> 和一个正整数 <span
+class="math inline">\(k\)</span> 问从数组中任选两个数使其和是 <span
+class="math inline">\(k\)</span> 的倍数 有多少种选法 。 对于数组 <span
+class="math inline">\(a_1=1,a_2=2,a_3=3\)</span> 而言： <span
+class="math inline">\((a_1,a_2)\)</span>和<span
+class="math inline">\((a_2,a_1)\)</span>被认为是同一种选法； <span
+class="math inline">\((a_1,a_2)\)</span>和<span
+class="math inline">\((a_1,a_3)\)</span>被认为是不同的选法 。</p>
+<p><strong>输入</strong>：</p>
+<p>第一行有两个正整数<span class="math inline">\(n, k\)</span> 。 <span
+class="math inline">\(n&lt;= 1000000\)</span>, <span
+class="math inline">\(k&lt;= 1000\)</span> 第二行有 <span
+class="math inline">\(n\)</span> 个正整数 每个数的大小不超过 <span
+class="math inline">\(10^9\)</span></p>
+<p><strong>输出</strong>：</p>
+<p>选出一对数使其和是<span class="math inline">\(k\)</span>
+的倍数的选法个数</p>
+<h3 id="问题分析-2">问题分析</h3>
+<ol type="1">
+<li>枚举对象: <span class="math inline">\(Obj(a_i,a_j), 1\le i &lt; j
+\le n\)</span></li>
+<li>逐一列举</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n;i++)</span><br><span class="line">	<span class="keyword">for</span>(j = i + <span class="number">1</span>; j &lt; n;j++)</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>逐一验证: <span class="math inline">\((a_i + a_j)\% k =
+0\)</span></li>
+</ol>
+<h2 id="优化">2.5 优化</h2>
+<blockquote>
+<p>很多枚举算法都可以通过二分思想进行优化</p>
+</blockquote>
+<h3 id="二分枚举基本思想">二分枚举基本思想</h3>
+<p>使用二分思想优化枚举算法时, 有两种基本情况:</p>
+<ul>
+<li><p>"求满足某个条件<span
+class="math inline">\(C(x)\)</span>的<strong>最小</strong><span
+class="math inline">\(x\)</span>", 其中<span
+class="math inline">\(C(x)\)</span>满足性质: 如果任意<span
+class="math inline">\(x\)</span>满足<span
+class="math inline">\(C(x)\)</span>, 则所有的<span
+class="math inline">\(x&#39;\ge x\)</span>也满足<span
+class="math inline">\(C(x&#39;)\)</span></p></li>
+<li><p>"求满足某个条件<span
+class="math inline">\(C(x)\)</span>的<strong>最大</strong><span
+class="math inline">\(x\)</span>", 其中<span
+class="math inline">\(C(x)\)</span>满足性质: 如果任意<span
+class="math inline">\(x\)</span>满足<span
+class="math inline">\(C(x)\)</span>, 则所有的<span
+class="math inline">\(x&#39;\le x\)</span>也满足<span
+class="math inline">\(C(x)\)</span></p></li>
+</ul>
+<p>相应的, 也有用两种基本的转化方法:</p>
+<figure>
+<img src="./image-20231019224725942.png"
+alt="image-20231019224725942" />
+<figcaption aria-hidden="true">image-20231019224725942</figcaption>
+</figure>
+<h3 id="绳子切割问题">绳子切割问题</h3>
+<h4 id="任务描述-3">任务描述</h4>
+<p>有<span class="math inline">\(N\)</span>条绳子，它们的长度分别为<span
+class="math inline">\(L_i (\le 1000)\)</span>。如果从它们中切割出<span
+class="math inline">\(K\)</span>条长度相同的绳子的话，这<span
+class="math inline">\(K\)</span>条绳子每条最长能有多长？答案保留到小数点后2位。</p>
+<p><strong>输入</strong>： <span class="math display">\[
+\begin{align*}
+N &amp;= 4 \\
+K &amp;= 11\\
+L &amp;= [8.02, 7.43, 4.57, 5.39]
+\end{align*}
+\]</span> <strong>输出</strong>:</p>
+<p><span
+class="math inline">\(2.0\)</span>(每条绳子分别可以得到4条、3条、2条、2条，共计11条)</p>
+<h4 id="问题分析-3">问题分析</h4>
+<ol type="1">
+<li>枚举对象: <span class="math inline">\(L, 0.00\le L\le
+1000.00\)</span></li>
+<li>逐一列举: 一层for循环，按照 <span class="math inline">\(L\)</span>
+从大到小以步长为<span class="math inline">\(0.01\)</span>遍历。</li>
+<li>逐一验证： 判断<span class="math inline">\(\sum\limits_{i=1}^{N}
+[L_i/L] \ge K\)</span></li>
+</ol>
+<h4 id="二分优化">二分优化</h4>
+<figure>
+<img src="./image-20231019224751179.png"
+alt="image-20231019224751179" />
+<figcaption aria-hidden="true">image-20231019224751179</figcaption>
+</figure>
+<h3 id="移动石头问题">移动石头问题</h3>
+<h4 id="任务描述-4">任务描述</h4>
+<p>有一条河，河中间有一些石头，石头的数量以及相邻两块石头之间的距离已知。现在可以移除一些石头，
+假设最多可以移除<span
+class="math inline">\(m\)</span>块石头（注意：首尾两块石头不可以移除，且假定所有的石头都处于同一条直线），
+问最多移除<span
+class="math inline">\(m\)</span>块石头后相邻两块石头之间的最小距离的最大值是多少？</p>
+<p><strong>输入</strong>:</p>
+<p>多组输入（&lt;=20组数据，读入以EOF结尾），
+每组第一行输入两个数字：n(2&lt;=n&lt;=1000)为
+石头的个数，m(0&lt;=m&lt;=n-2)为可移除的石头数
+目，随后n-1个正整数，表示顺序相邻两个石头的 距离d(d&lt;=1000)。</p>
+<p><strong>输出</strong>:</p>
+<p>每组输出一行结果，表示最大值。</p>
+<figure>
+<img src="./image-20231019225001096.png"
+alt="image-20231019225001096" />
+<figcaption aria-hidden="true">image-20231019225001096</figcaption>
+</figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://dogwy.github.io">DogWY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://dogwy.github.io/2023/10/19/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%9E%9A%E4%B8%BE/">https://dogwy.github.io/2023/10/19/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%9E%9A%E4%B8%BE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90%E8%AF%BE%E7%A8%8B/">算法设计与分析课程</a><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></div><div class="post_share"><div class="social-share" data-image="/./images/theme/defaultCover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/10/19/%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/" title="第一章绪论"><img class="cover" src="/2023/10/19/%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/image-20231019153027610.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">第一章绪论</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/10/19/%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/" title="第一章绪论"><img class="cover" src="/2023/10/19/%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/image-20231019153027610.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-19</div><div class="title">第一章绪论</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%9E%9A%E4%B8%BE"><span class="toc-text">第二章 枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">1.1 枚举基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4"><span class="toc-text">枚举基本步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E7%B3%8A%E6%95%B0%E5%AD%97%E5%8C%B9%E9%85%8D"><span class="toc-text">2.2 模糊数字匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0"><span class="toc-text">任务描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-text">问题分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BE%E9%92%B1%E7%99%BE%E9%B8%A1%E9%97%AE%E9%A2%98"><span class="toc-text">2.3 百钱百鸡问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0-1"><span class="toc-text">任务描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-1"><span class="toc-text">问题分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E9%85%8D%E5%AF%B9"><span class="toc-text">2.4 数组配对</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0-2"><span class="toc-text">任务描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-2"><span class="toc-text">问题分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96"><span class="toc-text">2.5 优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9E%9A%E4%B8%BE%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">二分枚举基本思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B3%E5%AD%90%E5%88%87%E5%89%B2%E9%97%AE%E9%A2%98"><span class="toc-text">绳子切割问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0-3"><span class="toc-text">任务描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-3"><span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E4%BC%98%E5%8C%96"><span class="toc-text">二分优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E7%9F%B3%E5%A4%B4%E9%97%AE%E9%A2%98"><span class="toc-text">移动石头问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0-4"><span class="toc-text">任务描述</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By DogWY</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
