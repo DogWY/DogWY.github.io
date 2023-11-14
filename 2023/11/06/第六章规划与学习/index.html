@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第六章 规划与学习 | 狗东西's博客</title><meta name="author" content="DogWY"><meta name="copyright" content="DogWY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第六章 规划与学习 简单的回顾  在之前的内容中, 给定模型时我们时怎么做的?  动态规划、策略迭代(策略评估与策略提升)、值迭代  什么时候我们需要无模型的方法?  MDP太多或者不知道MDP的时候  在之前的学习中, 没有MDP时我们时怎么做的?  采集交互数据, 利用MC或者TD估计值函数    除此之外, 我们能怎么做?  基于模型的规划 + 无模型学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章 规划与学习">
+<meta property="og:url" content="https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="狗东西&#39;s博客">
+<meta property="og:description" content="第六章 规划与学习 简单的回顾  在之前的内容中, 给定模型时我们时怎么做的?  动态规划、策略迭代(策略评估与策略提升)、值迭代  什么时候我们需要无模型的方法?  MDP太多或者不知道MDP的时候  在之前的学习中, 没有MDP时我们时怎么做的?  采集交互数据, 利用MC或者TD估计值函数    除此之外, 我们能怎么做?  基于模型的规划 + 无模型学">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/image-20231106193427758.png">
+<meta property="article:published_time" content="2023-11-06T08:19:54.000Z">
+<meta property="article:modified_time" content="2023-11-14T02:43:38.316Z">
+<meta property="article:author" content="DogWY">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="高级强化学习课程">
+<meta property="article:tag" content="课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/image-20231106193427758.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第六章 规划与学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-14 10:43:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/theme/logo01.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/image-20231106193427758.png')"><nav id="nav"><span id="blog-info"><a href="/" title="狗东西's博客"><span class="site-name">狗东西's博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第六章 规划与学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-11-06T08:19:54.000Z" title="Created 2023-11-06 16:19:54">2023-11-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-11-14T02:43:38.316Z" title="Updated 2023-11-14 10:43:38">2023-11-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第六章 规划与学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第六章-规划与学习">第六章 规划与学习</h1>
+<h2 id="简单的回顾">简单的回顾</h2>
+<ul>
+<li>在之前的内容中, 给定模型时我们时怎么做的?
+<ul>
+<li>动态规划、策略迭代(策略评估与策略提升)、值迭代</li>
+</ul></li>
+<li>什么时候我们需要无模型的方法?
+<ul>
+<li>MDP太多或者不知道MDP的时候</li>
+</ul></li>
+<li>在之前的学习中, 没有MDP时我们时怎么做的?
+<ul>
+<li>采集交互数据, 利用MC或者TD估计值函数</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>除此之外, 我们能怎么做?</p>
+</blockquote>
+<h2 id="基于模型的规划-无模型学习">基于模型的规划 + 无模型学习</h2>
+<p>思考一个场景: 当你下棋的时候，如果走下一步有时间思考你会做什么？</p>
+<blockquote>
+<p>你会在你的心中建立一个虚拟的棋盘, 然后基于这个模型进行推演规划</p>
+<p>显然, 你在此时在进行一个 基于模型的规划+无模型学习 的强化学习:</p>
+<ul>
+<li>心中的推演是 基于模型的规划;</li>
+<li>你真实的去落子, 然后得到对手的反馈,
+然后你可以大概知道自己是否下了一手好棋, 你这是在进行无模型学习.</li>
+</ul>
+</blockquote>
+<p>那我们什么时需要将规划和学习进行结合呢?</p>
+<ol type="1">
+<li>虽然没有模型, 但是可以利用采集的经验学一个近似的模型</li>
+<li>虽然已有MDP模型的规模太大无法做DP, 但完全不用也有点浪费</li>
+</ol>
+<p>既然无模型的学习算法科技解决问题, 为什么要学习一个假模型呢?</p>
+<ul>
+<li>有些情况下与真实环境交互代价很高，例如机器人在真实环境下训练，在模型中推演规划可以降低采样成本</li>
+<li>学习一个模型可以有助于分布式并行学习，从而提高学习效率</li>
+</ul>
+<h2 id="基本概念介绍">基本概念介绍</h2>
+<h3 id="模型model">模型(Model)</h3>
+<p>给定一个状态和动作, 模型能够预测下一个状态和奖励的分布: 即<span
+class="math inline">\(p(s&#39;,r|s,a)\)</span></p>
+<ul>
+<li><span class="math inline">\(s,a\)</span>: 给定的状态和动作</li>
+<li><span class="math inline">\(s&#39;,r\)</span>: 下一个状态和奖励</li>
+</ul>
+<p>模型分类:</p>
+<ul>
+<li>分布模型(distribution model)
+<ul>
+<li>描述了轨迹的所有可能性及其概率</li>
+</ul></li>
+<li>样本模型(sample model)
+<ul>
+<li>根据概率进行采样, 只产生一条可能的轨迹</li>
+</ul></li>
+</ul>
+<h3 id="规划planning">规划(Planning)</h3>
+<p>在强化学习中规划是指利用模型来提升策略的方法，例如动态规划</p>
+<blockquote>
+<p>或者说规划指 输入一个模型, 输出一个策略的搜索过程</p>
+</blockquote>
+<h3 id="规划与学习planning-and-learning">规划与学习(Planning and
+Learning)</h3>
+<ul>
+<li>不同点
+<ul>
+<li>规划: 利用<strong>模型</strong>产生的模拟经验</li>
+<li>学习: 利用<strong>环境</strong>产生的真实经验</li>
+</ul></li>
+<li>相同点
+<ul>
+<li>通过回溯(back-up)更新值函数的估计</li>
+<li>统一来看, 学习的方法可以用在模拟经验上</li>
+</ul></li>
+</ul>
+<h3 id="强化学习的两个重要指标">强化学习的两个重要指标</h3>
+<ul>
+<li>算法收敛后策略在初始状态下的期望回报</li>
+<li>样本复杂度
+<ul>
+<li>算法达到收敛需要在真实环境中采样的样本数量</li>
+<li>基于模型的方法可以增加模拟采样经验，往往可以获得更低的样本复杂度，这就是我们在强化学习算法中使用模型的根本动机</li>
+</ul></li>
+</ul>
+<h2 id="利用学习的模型">利用学习的模型</h2>
+<p><strong>基本思想</strong>:
+在强化学习中，有时虽然我们不知道能够反应真实环境的模型，但是我们可以在与环境交互的过程中，通过采集真实经验，边学习策略，边利用真实经验学习模型，这样我们就可以利用学习到的模型生成额外的模拟经验，从而降低算法的样本复杂度</p>
+<h3 id="dyna算法框架集成规划和学习">Dyna算法框架(集成规划和学习)</h3>
+<figure>
+<img src="./image-20231106193427758.png"
+alt="image-20231106193427758" />
+<figcaption aria-hidden="true">image-20231106193427758</figcaption>
+</figure>
+<ul>
+<li>和环境交互产生真实经验</li>
+<li>左边代表直接强化学习
+<ul>
+<li>更新值函数和策略</li>
+</ul></li>
+<li>右下边代表学习模型
+<ul>
+<li>使用真实经验更新模型</li>
+</ul></li>
+<li>右边代表基于模型的规划
+<ul>
+<li>基于模型随机采样得到模拟经验
+<ul>
+<li>只从以前得到的状态动作对随机采样</li>
+</ul></li>
+<li>使用模拟经验做规划更新值函数和策略</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>因为没有采样到的状态动作对在模拟的模型中是无法处理的,
+采样这样的状态动作对只会被退化为随机策略</p>
+</blockquote>
+<figure>
+<img src=".//image-20231106200527663.png"
+alt="image-20231106200527663" />
+<figcaption aria-hidden="true">image-20231106200527663</figcaption>
+</figure>
+<blockquote>
+<p><span class="math inline">\(Model(s,a)\)</span>: 拟合得到的环境模型,
+预测<span class="math inline">\((s,a)\)</span>对的下一个状态和奖励</p>
+</blockquote>
+<h3 id="dyna算法中的采样方法">Dyna算法中的采样方法</h3>
+<p>Dyna算法中最基本的采样方法是均匀随机采样. 但是,
+实际上我们会希望模拟的经验和更新应集中在一些特殊的状态动作上.
+(比如在终点附近的经验、成功达到终点的经验)</p>
+<p>所以, 此时我们希望能有一个更有针对性的采样方法.</p>
+<p>有两种经验是我们比较希望去采样的:</p>
+<ul>
+<li>成功经验的周围经验</li>
+<li>某些会导致较大的值更新的经验</li>
+</ul>
+<p>出于这种希望, 优先级采样法出现了:</p>
+<ul>
+<li>设置优先级更新队列, 根据值改变的幅度定义优先级</li>
+</ul>
+<p><span class="math display">\[
+P\leftarrow |R + \gamma \max\limits_{a} Q(S&#39;, a) - Q(S,A)|
+\]</span></p>
+<figure>
+<img src=".//image-20231106203027638.png"
+alt="image-20231106203027638" />
+<figcaption aria-hidden="true">image-20231106203027638</figcaption>
+</figure>
+<h3 id="利用模型方法的优劣">利用模型方法的优劣</h3>
+<ul>
+<li>优势
+<ul>
+<li>提升采样的利用率</li>
+<li>智能体可以减少与真实环境的交互</li>
+<li>增加可并行性, 提升学习效率</li>
+</ul></li>
+<li>劣势
+<ul>
+<li>模型学习的表现会影响策略学习的结果</li>
+<li>如果真实环境有更新或者调整,
+模型需要通过多次迭代才能学到新的变化</li>
+</ul></li>
+</ul>
+<h2 id="决策时规划">决策时规划</h2>
+<h3 id="决策时规划与背景规划">决策时规划与背景规划</h3>
+<ul>
+<li>背景规划(Background Planning)
+<ul>
+<li>规划是为了更新一些状态值供后续动作的选择</li>
+<li>如: 动态规划、Dyna</li>
+</ul></li>
+<li>决策时规划(Decision-time Planning)
+<ul>
+<li>规划只着眼于当前状态的动作选择</li>
+<li>在不需要快速反应的应用中很有效、如棋类游戏</li>
+</ul></li>
+</ul>
+<h3 id="实时动态规划real-time-dp">实时动态规划(Real Time DP)</h3>
+<ul>
+<li>传统动态规划扫描全部状态依次进行更新</li>
+<li>实时动态规划和传统动态规划的区别
+<ul>
+<li>实时的轨迹采样</li>
+<li>只更新轨迹访问的状态值</li>
+</ul></li>
+<li>优势
+<ul>
+<li>能够<strong>跳过策略无关的状态</strong></li>
+<li>在解决<strong>状态集合规模大</strong>的问题上具有优势</li>
+<li>满足<strong>一定条件下</strong>可以以<strong>概率1收敛到最优策略</strong></li>
+</ul></li>
+</ul>
+<figure>
+<img src=".//image-20231106205054490.png"
+alt="image-20231106205054490" />
+<figcaption aria-hidden="true">image-20231106205054490</figcaption>
+</figure>
+<h3 id="蒙特卡洛树搜索mente-carlo-tree-search-mcts">蒙特卡洛树搜索(Mente
+Carlo Tree Search, MCTS)</h3>
+<figure>
+<img src=".//image-20231106205250647.png"
+alt="image-20231106205250647" />
+<figcaption aria-hidden="true">image-20231106205250647</figcaption>
+</figure>
+<h4 id="启发式搜索">启发式搜索</h4>
+<ul>
+<li>访问到当前状态(根节点), 对后续可能的情况进行树结构展开</li>
+<li>回溯到当前状态(根节点), 方式类似于值函数的更新方式</li>
+<li>决策时规划着重于当前状态</li>
+<li>可以看做是贪心策略在单步情况下的扩展
+<ul>
+<li><strong>启发式搜索看多步规划下, 当前状态的最优行动</strong></li>
+</ul></li>
+<li>搜索越深, 计算量越大, 得到的动作越接近最优</li>
+</ul>
+<figure>
+<img src=".//image-20231106210006807.png"
+alt="image-20231106210006807" />
+<figcaption aria-hidden="true">image-20231106210006807</figcaption>
+</figure>
+<h3 id="rollout算法">Rollout算法</h3>
+<ul>
+<li><p>一个Rollout就是从当前状态进行一次模拟试验获得一条轨迹</p></li>
+<li><p>在当前状态下选取蒙特卡洛估计值最高的动作</p></li>
+<li><p>在下一个状态重复上述步骤</p></li>
+</ul>
+<p>特点:</p>
+<ul>
+<li>决策时规划区别于前面介绍的MC值函数估计，它只关心当前状态下的值函数估计，只解决当前状态下的决策问题</li>
+<li>直接目的本质上类似于策略评估和改进，寻找更优的策略</li>
+</ul>
+<h4 id="mcts">MCTS</h4>
+<figure>
+<img src=".//image-20231106211546206.png"
+alt="image-20231106211546206" />
+<figcaption aria-hidden="true">image-20231106211546206</figcaption>
+</figure>
+<p>一个简单的例子:</p>
+<figure>
+<img src=".//image-20231106212315208.png"
+alt="image-20231106212315208" />
+<figcaption aria-hidden="true">image-20231106212315208</figcaption>
+</figure>
+<blockquote>
+<p>UCT函数是为了鼓励尝试那些尝试次数较少的状态</p>
+</blockquote>
+<blockquote>
+<p>MCTS可以独立应用于强化学习任务中, 也可以结合其他背景规划方法,
+利用提前学好的策略和价值函数来帮助MCTS来进行更有效的评估决策</p>
+</blockquote>
+<h3 id="决策时规划总结">决策时规划总结</h3>
+<p>决策时规划与我们之前学习的无模型方法的区别是:</p>
+<ul>
+<li><p>对于有些问题，难以通过训练直接学习到一个可用的策略时，只要决策时还有时间，就可以借助基于当前状态的规划做到更好</p></li>
+<li><p>这就像是当你遇到难题时，你可以说让我想一想，然后借助头脑里的模型展开推演，在可接受的时间范围内找到一个更好的决策</p></li>
+<li><p>推演的过程就像是在头脑中展开一颗非常大的树，然后针对不同的分支运用rollout的方法看到最终的结果来返回来推测当下那个选择更好</p></li>
+<li><p>同时，如果能够把平时学到的策略和价值函数运用到决策时规划当中，效果可能会更好</p></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://dogwy.github.io">DogWY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/">https://dogwy.github.io/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%BA%A7%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B/">高级强化学习课程</a><a class="post-meta__tags" href="/tags/%E8%AF%BE%E7%A8%8B/">课程</a></div><div class="post_share"><div class="social-share" data-image="/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/image-20231106193427758.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/11/06/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="第七章 基于值函数的深度强化学习"><img class="cover" src="/./images/theme/defaultCover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">第七章 基于值函数的深度强化学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/11/06/%E8%A7%84%E5%88%92%E4%BA%8E%E5%AD%A6%E4%B9%A0/" title="规划于学习"><img class="cover" src="/images/theme/defaultCover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">规划于学习</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/10/10/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="第一章 强化学习基本概念"><img class="cover" src="/2023/10/10/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">第一章 强化学习基本概念</div></div></a></div><div><a href="/2023/11/06/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="第七章 基于值函数的深度强化学习"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-06</div><div class="title">第七章 基于值函数的深度强化学习</div></div></a></div><div><a href="/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/" title="第三章 马尔可夫决策过程"><img class="cover" src="/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">第三章 马尔可夫决策过程</div></div></a></div><div><a href="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/" title="第二章 多臂老虎机与探索问题"><img class="cover" src="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-11</div><div class="title">第二章 多臂老虎机与探索问题</div></div></a></div><div><a href="/2023/10/16/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="第五章 基于值函数的无模型强化学习"><img class="cover" src="/2023/10/16/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/image.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">第五章 基于值函数的无模型强化学习</div></div></a></div><div><a href="/2023/10/16/%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95/" title="第四章 动态规划算法"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">第四章 动态规划算法</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0"><span class="toc-text">第六章 规划与学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9E%E9%A1%BE"><span class="toc-text">简单的回顾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A7%84%E5%88%92-%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0"><span class="toc-text">基于模型的规划 + 无模型学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%8B%E7%BB%8D"><span class="toc-text">基本概念介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8Bmodel"><span class="toc-text">模型(Model)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%92planning"><span class="toc-text">规划(Planning)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0planning-and-learning"><span class="toc-text">规划与学习(Planning and
+Learning)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E6%8C%87%E6%A0%87"><span class="toc-text">强化学习的两个重要指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-text">利用学习的模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dyna%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6%E9%9B%86%E6%88%90%E8%A7%84%E5%88%92%E5%92%8C%E5%AD%A6%E4%B9%A0"><span class="toc-text">Dyna算法框架(集成规划和学习)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dyna%E7%AE%97%E6%B3%95%E4%B8%AD%E7%9A%84%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95"><span class="toc-text">Dyna算法中的采样方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A8%A1%E5%9E%8B%E6%96%B9%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%A3"><span class="toc-text">利用模型方法的优劣</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E6%97%B6%E8%A7%84%E5%88%92"><span class="toc-text">决策时规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E6%97%B6%E8%A7%84%E5%88%92%E4%B8%8E%E8%83%8C%E6%99%AF%E8%A7%84%E5%88%92"><span class="toc-text">决策时规划与背景规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92real-time-dp"><span class="toc-text">实时动态规划(Real Time DP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%A0%91%E6%90%9C%E7%B4%A2mente-carlo-tree-search-mcts"><span class="toc-text">蒙特卡洛树搜索(Mente
+Carlo Tree Search, MCTS)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2"><span class="toc-text">启发式搜索</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rollout%E7%AE%97%E6%B3%95"><span class="toc-text">Rollout算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mcts"><span class="toc-text">MCTS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E6%97%B6%E8%A7%84%E5%88%92%E6%80%BB%E7%BB%93"><span class="toc-text">决策时规划总结</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By DogWY</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

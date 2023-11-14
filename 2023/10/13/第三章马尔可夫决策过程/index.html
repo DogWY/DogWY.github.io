@@ -1,0 +1,516 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第三章 马尔可夫决策过程 | 狗东西's博客</title><meta name="author" content="DogWY"><meta name="copyright" content="DogWY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第三章 马尔可夫决策过程  文章逻辑: 1. 引入状态、 多步决策和决策过程 2. 阐述马尔可夫性质 3. 引入马尔可夫奖励过程 4. 扩展到马尔可夫决策过程 5. 引入占用度量和策略 6. 推出Bellman方程    Alt text  在第二章 多臂老虎机与探索问题中, 我们基于多臂老虎机介绍了机器学习中探索和利用的平衡问题. 现在我们尝试在多臂老虎机问题的基础上引入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章 马尔可夫决策过程">
+<meta property="og:url" content="https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="狗东西&#39;s博客">
+<meta property="og:description" content="第三章 马尔可夫决策过程  文章逻辑: 1. 引入状态、 多步决策和决策过程 2. 阐述马尔可夫性质 3. 引入马尔可夫奖励过程 4. 扩展到马尔可夫决策过程 5. 引入占用度量和策略 6. 推出Bellman方程    Alt text  在第二章 多臂老虎机与探索问题中, 我们基于多臂老虎机介绍了机器学习中探索和利用的平衡问题. 现在我们尝试在多臂老虎机问题的基础上引入">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png">
+<meta property="article:published_time" content="2023-10-13T02:34:46.000Z">
+<meta property="article:modified_time" content="2023-11-14T02:43:38.297Z">
+<meta property="article:author" content="DogWY">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="高级强化学习课程">
+<meta property="article:tag" content="课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第三章 马尔可夫决策过程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-14 10:43:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/theme/logo01.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png')"><nav id="nav"><span id="blog-info"><a href="/" title="狗东西's博客"><span class="site-name">狗东西's博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第三章 马尔可夫决策过程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-13T02:34:46.000Z" title="Created 2023-10-13 10:34:46">2023-10-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-11-14T02:43:38.297Z" title="Updated 2023-11-14 10:43:38">2023-11-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第三章 马尔可夫决策过程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第三章-马尔可夫决策过程">第三章 马尔可夫决策过程</h1>
+<blockquote>
+<p>文章逻辑: 1. 引入状态、 多步决策和决策过程 2. 阐述马尔可夫性质 3.
+引入马尔可夫奖励过程 4. 扩展到马尔可夫决策过程 5. 引入占用度量和策略 6.
+推出<code>Bellman</code>方程</p>
+</blockquote>
+<figure>
+<img src="image-7.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<p>在<a href="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/" title="第二章 多臂老虎机与探索问题">第二章 多臂老虎机与探索问题</a>中,
+我们基于多臂老虎机介绍了机器学习中探索和利用的平衡问题.</p>
+<p>现在我们尝试在多臂老虎机问题的基础上引入更复杂的情况.</p>
+<h2 id="问题从简单到复杂">问题从简单到复杂</h2>
+<ul>
+<li>无状态决策 vs 有状态决策</li>
+<li>单步决策 vs 多步决策</li>
+<li>奖励过程 vs 决策过程</li>
+</ul>
+<h3 id="从无状态决策到有状态决策">从无状态决策到有状态决策</h3>
+<ol type="1">
+<li>从无状态决策到有状态决策 多臂老虎机 -&gt; 上下文多臂老虎机</li>
+<li>从单步到多步决策
+<ul>
+<li>单步决策问题: 一次决策不会影响到后续状态</li>
+<li>多步决策问题: 一步决策会影响到后续会面对的状态</li>
+</ul></li>
+<li>从奖励过程到决策过程
+<ul>
+<li>无需干涉, 任由环境自发经历一系列状态转移,
+在每个状态下对应着相应的奖励</li>
+<li>在每个状态下需要经过决策给出动作, 进而影响环境产生下一个状态,
+在每个状态下对应着相应的奖励</li>
+</ul></li>
+</ol>
+<h3 id="解决决策问题的关键环境">解决决策问题的关键环境</h3>
+<ol type="1">
+<li>对环境建模——如何用数学语言来描述环境</li>
+<li>对问题建模——如何用数学语言来描述问题目标</li>
+<li>提求解算法——通过跟环境交互找到一个好策略</li>
+<li>对算法分析——分析算法的收敛性、唯一性等</li>
+</ol>
+<h2 id="马尔可夫过程">马尔可夫过程</h2>
+<p>马尔可夫奖励过程中, 没有动作, 并且引入了如下概念:</p>
+<ul>
+<li>有了状态的概念</li>
+<li>有了多步的概念</li>
+<li>其他新概念:
+<ul>
+<li>回合</li>
+<li>回报</li>
+<li>折扣因子</li>
+</ul></li>
+</ul>
+<h3 id="概率轮与随机过程">概率轮与随机过程</h3>
+<ul>
+<li>概率论是对随机现象进行建模的数学分支(静态随机现象)</li>
+<li>随机过程是一个或多个事件、随机系统或者随机现象随时间发生演变的过程(动态随机现象)</li>
+</ul>
+<p><span class="math display">\[
+\mathbb{P}[S_{t+1}|S_1,\dots,S_t]
+\]</span></p>
+<h3 id="马尔可夫过程-1">马尔可夫过程</h3>
+<p>马尔可夫过程是具有<strong>马尔可夫性质</strong>的随机过程</p>
+<blockquote>
+<p>The future is independent of the past given the present</p>
+</blockquote>
+<p>定义:</p>
+<ul>
+<li>状态<span class="math inline">\(S_t\)</span>是马尔可夫的,
+当且仅当:</li>
+</ul>
+<p><span class="math display">\[
+\mathbb{P}[S_{t+1}|S_t] = \mathbb{P}[S_{t+1}|S_1,\dots,S_t]
+\]</span></p>
+<p>性质:</p>
+<ul>
+<li>状态从历史中捕获了所有相关信息</li>
+<li>当前状态已知的时候, 历史和未来是独立的</li>
+<li>也就是说, <strong>当前状态是未来的充分统计量</strong></li>
+</ul>
+<h2 id="马尔可夫奖励过程">马尔可夫奖励过程</h2>
+<p>一个马尔可夫奖励过程是一个伴随着奖励的马尔可夫链. 比如:</p>
+<blockquote>
+<p>这里可以看到, 状态都是概率转移的, 没有动作这个部分.</p>
+</blockquote>
+<p>定义:</p>
+<ul>
+<li>MRP可以由一个四元组表示:<span class="math inline">\((S, \{
+P_{ss&#39;} \}, \gamma, R)\)</span></li>
+<li><span class="math inline">\(S\)</span>是状态的集合
+<ul>
+<li>比如迷宫中的位置</li>
+</ul></li>
+<li><span class="math inline">\(\{ P_{ss&#39;}
+\}\)</span>是状态转移概率(矩阵)
+<ul>
+<li>对每个状态<span class="math inline">\(s\in S\)</span>, <span
+class="math inline">\(P_{ss&#39;}\)</span>是从<span
+class="math inline">\(s\)</span>转移到下一个状态<span
+class="math inline">\(s&#39;\)</span>的概率</li>
+</ul></li>
+<li><span class="math inline">\(R:S \longmapsto
+\mathbb{R}\)</span>是奖励函数</li>
+<li><span class="math inline">\(\gamma \in
+[0,1]\)</span>是对未来奖励的折扣因子</li>
+</ul>
+<h3 id="回合episode">回合(episode)</h3>
+<p>回合是指在强化学习设置中, 智能体与环境的一次完整的交互.
+(比如完成游戏或者被boss杀掉)</p>
+<h3 id="对长期总体效果的评估回报">对长期总体效果的评估——回报</h3>
+<p>回报(Return): 是对未来时间采样得到的所有经过折扣因子的奖励的累和</p>
+<p><span class="math display">\[
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots \\\\ =
+\sum\limits_{k=0}^{\infty} \gamma^k R_{t+k+1}
+\]</span></p>
+<p>引入折扣因子的原因:</p>
+<ul>
+<li>如果是经济方面的奖励, 相比延迟奖励人们往往对及时奖励更感兴趣</li>
+<li>动物和人类的行为都表现出对及时奖励的偏好</li>
+<li>未来代表着存在一定的不确定性</li>
+<li>对于循环马尔可夫过程, 我们希望避免无穷大回报值</li>
+<li>如果所有轨迹序列都确保有终止，并且不希望区分当前和未来的奖励时，可以让折扣因子等于1.</li>
+</ul>
+<h3 id="价值函数">价值函数</h3>
+<p>价值函数: 给出状态<span
+class="math inline">\(s\)</span>的长期价值</p>
+<p>定义: 马尔可夫奖励过程的状态价值函数是从状态<span
+class="math inline">\(s\)</span><strong>预期到的回报</strong></p>
+<p><span class="math display">\[
+v(s) = E[G_t|s_t = s] \\\\
+= E[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots | s_t = s]
+\]</span></p>
+<blockquote>
+<p>这里强调一下, 这个回报是<strong>预期回报</strong>. 如何得到预期回报,
+就要涉及到具体的强化学习方法了.</p>
+</blockquote>
+<h2 id="马尔可夫决策过程">马尔可夫决策过程</h2>
+<p>马尔可夫决策过程(Markov Decision Process, MDP): 一套结果部分随机、
+部分在决策者的控制下的为决策过程建模的数学框架.</p>
+<p><span class="math display">\[
+\mathbb{P} [S_{t+1}|S_t] = \mathbb{P}[S_{t+1}|S_1,\dots,S_t] \\\\
+\Rightarrow \mathbb{P}[S_{t+1}|S_t, A_t]
+\]</span></p>
+<p>马尔可夫决策过程形式化地描述了一种强化学习的环境:</p>
+<ul>
+<li>环境完全可预测</li>
+<li>当前状态可以完全表征过程</li>
+</ul>
+<p>定义: 马尔可夫决策过程(MDP)可以由一个五元组表示<span
+class="math inline">\((S,A,\{ P_{sa} \}, \gamma, R)\)</span></p>
+<ul>
+<li><span class="math inline">\(S\)</span>是状态的集合
+<ul>
+<li>比如迷宫中的位置</li>
+</ul></li>
+<li><span class="math inline">\(A\)</span>是动作的集合</li>
+<li><span class="math inline">\(P_{sa}\)</span>是状态转移概率
+<ul>
+<li>对每个状态<span class="math inline">\(s\in S\)</span>和动作<span
+class="math inline">\(a\in A\)</span>, <span
+class="math inline">\(P_{sa}\)</span>是下一个状态的概率分布</li>
+</ul></li>
+<li><span class="math inline">\(\gamma \in
+[0,1]\)</span>是对未来奖励的折扣因子</li>
+<li><span class="math inline">\(R:S \times A \longmapsto
+\mathbb{R}\)</span>是奖励函数
+<ul>
+<li>有时奖励只和状态有关</li>
+</ul></li>
+</ul>
+<h3 id="mdp的动态性">MDP的动态性</h3>
+<p>大部分强化学习, 奖励只和状态相关, 此时奖励函数为<span
+class="math inline">\(R(s):S\longmapsto \mathbb{R}\)</span></p>
+<h3 id="mdp下的动作与策略">MDP下的动作与策略</h3>
+<ul>
+<li>MDP在MRP的基础上引入了动作<span
+class="math inline">\(a\)</span></li>
+<li>动作<span
+class="math inline">\(a\)</span>是智能体的policy策略函数<span
+class="math inline">\(\pi\)</span>的输出, <span class="math inline">\(a
+= \pi (s)\)</span></li>
+<li>Policy可以基于动作价值函数<span
+class="math inline">\(q(s,a)\)</span>进行构建, 即在状态<span
+class="math inline">\(s\)</span>下贪心选择<span
+class="math inline">\(q\)</span>值最大的动作</li>
+<li>不同于价值函数 <span class="math inline">\(v(s)\)</span> 仅表示状态
+<span class="math inline">\(s\)</span> 的价值，<span
+class="math inline">\(q(s, a)\)</span> 表示在状态 <span
+class="math inline">\(s\)</span>下采取动作 <span
+class="math inline">\(a\)</span> 的价值</li>
+</ul>
+<h2 id="与mdp动态环境交互">与MDP动态环境交互</h2>
+<p><strong>从固定的数据集学习</strong>和<strong>从与MDP交互中学习</strong>有什么区别?</p>
+<figure>
+<img src="image-3.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<figure>
+<img src="image-4.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<p>为什么要考虑与环境交互产生的数据分布问题?</p>
+<ul>
+<li>与环境交互数据分布表达了智能体经验的丰富程度，某种程度上决定了智能体的能力范围</li>
+<li>数据分布与当前强化学习的一个热点研究方向——离线强化学习，密切相关</li>
+</ul>
+<h3 id="占用度量和策略">占用度量和策略</h3>
+<ul>
+<li>给定同一个动态环境(即MDP), 有一个初始状态分布<span
+class="math inline">\(v_0(s)\)</span></li>
+<li><span class="math inline">\(P^{\pi}_t(s)\)</span>表示采取策略<span
+class="math inline">\(\pi\)</span>使得智能体在<span
+class="math inline">\(t\)</span>时刻处于状态<span
+class="math inline">\(s\)</span>的概率, 于是有: <span
+class="math inline">\(P^{\pi}_0(s) = v_0(s)\)</span></li>
+</ul>
+<p>在以上基础上, 我们可以定义一个策略的状态访问分布:</p>
+<p><span class="math display">\[
+v^{\pi}(s) = (1-\gamma)\sum\limits_{t=0}^T \gamma^t P^{\pi}_t(s)
+\]</span></p>
+<blockquote>
+<p>可近似看作: 随机从轨迹中抽出一个交互来, 这个交互处于状态<span
+class="math inline">\(s\)</span>的概率</p>
+</blockquote>
+<p>占用度量(Occupancy Measure): 在给定策略下对与状态动作对的访问分布</p>
+<p><span class="math display">\[
+\rho^{\pi}(s,a) = (1-\gamma)\sum\limits_{t=0}^T \gamma^t
+P^{\pi}_t(s)\pi(a|s) = v^{\pi}(s)\pi(a|s)
+\]</span></p>
+<ul>
+<li>定理1: 和同一个动态环境交互的两个策略<span
+class="math inline">\(\pi_1\)</span>和<span
+class="math inline">\(\pi_2\)</span>得到的占用度量<span
+class="math inline">\(\rho^{\pi_1}\)</span>和<span
+class="math inline">\(\rho^{\pi_2}\)</span>满足: $^{_1}=^{_2}   iff   _1
+= _2 $</li>
+<li>给定占用度量<span
+class="math inline">\(\rho\)</span>,可生成该占用度量的唯一策略是:<span
+class="math inline">\(\pi_{\rho} =
+\frac{\rho(s,a)}{\sum_{a&#39;}\rho(s,a&#39;)}\)</span></li>
+</ul>
+<h2 id="强化学习的目标与贝尔曼等式">强化学习的目标与贝尔曼等式</h2>
+<p>强化学习的目标: 找到能够最大化累计奖励期望的策略, 即:</p>
+<p><span class="math display">\[
+\mathop{max}\limits_{\pi}\mathbb{E}[R(s_0) + \gamma R(s_1) + \gamma^2
+R(s_2) + \dots]
+\]</span></p>
+<p>给定策略<span class="math inline">\(\pi\)</span>定义价值函数:</p>
+<p><span class="math display">\[
+V^{\pi}(s) = \mathbb{E}[R(s_0) + \gamma R(s_1) + \gamma^2 R(s_2) + \dots
+| s_0 = s, \pi]
+\]</span></p>
+<blockquote>
+<p>即在给定状态<span class="math inline">\(s\)</span>, 根据策略<span
+class="math inline">\(\pi\)</span>采取动作时的累计奖励期望</p>
+</blockquote>
+<h2 id="价值函数的bellman等式">价值函数的<code>Bellman</code>等式</h2>
+<p>第一种<code>Bellman</code>等式(贝尔曼方程):</p>
+<figure>
+<img src="image-5.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<p>第二种<code>Bellman</code>等式(贝尔曼状态动作价值方程):</p>
+<p><span class="math display">\[
+Q^{\pi}(s,a) = R(s,a) + \gamma \sum\limits_{s&#39; \in S} P_{sa}(s&#39;)
+\sum\limits_{a&#39;\in A}\pi(a&#39;|s&#39;)Q^{\pi}(s&#39;,a&#39;)
+\]</span></p>
+<blockquote>
+<p>在动作导致的状态变换是遵循一定概率的情况下,
+使用上述<code>Bellman</code>等式</p>
+</blockquote>
+<h3 id="最优价值函数">最优价值函数</h3>
+<p>对于状态<span
+class="math inline">\(s\)</span>来说的最优价值函数是所有策略可获得的最大价值</p>
+<p><span class="math display">\[
+V^*(s) = \mathop{\max}\limits_{\pi} V^{\pi} (s)
+\]</span></p>
+<p>最优价值函数的<code>Bellman</code>等式:</p>
+<p><span class="math display">\[
+V^*(s) = R(s) + \mathop{\max}\limits_{a\in A}\gamma\sum\limits_{s&#39;
+\in S}P_{sa}(s&#39;)V^*(s&#39;)
+\]</span></p>
+<blockquote>
+<p>对状态<span class="math inline">\(s\)</span>和策略<span
+class="math inline">\(\pi\)</span>有:</p>
+<p><span class="math display">\[
+V^*(s) = V^{\pi^*}(s) \ge V^{\pi}(s)
+\]</span></p>
+</blockquote>
+<p>此时我们可以将<code>Bellman</code>等式改写为矩阵形式:</p>
+<figure>
+<img src="image-6.png" alt="Alt text" />
+<figcaption aria-hidden="true">Alt text</figcaption>
+</figure>
+<blockquote>
+<p>对于MDP, 把<span class="math inline">\(P(s_1|s_1)\)</span>改为<span
+class="math inline">\(P(s_2|s_1, a)\)</span>后公式一样成立</p>
+</blockquote>
+<p>显然<code>Bellman</code>等式是一个线性等式, 所以可以直接求解:</p>
+<p><span class="math display">\[
+\begin{align}
+    V &amp; = R + \gamma PV \\\\
+    (1-\gamma P)V &amp; = R \\\\
+    V &amp; = (1-\gamma P)^{-1}R
+\end{align}
+\]</span></p>
+<blockquote>
+<p>求解的时间复杂度为<span class="math inline">\(O(N^3)\)</span>,
+因此此方法只适用于小规模的MRP</p>
+<p>对于大概膜的MRP可考虑如下方案: - Dynamic Programming - Monte-Carlo
+evaluation - Temporal-Difference learning</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://dogwy.github.io">DogWY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/">https://dogwy.github.io/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%BA%A7%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B/">高级强化学习课程</a><a class="post-meta__tags" href="/tags/%E8%AF%BE%E7%A8%8B/">课程</a></div><div class="post_share"><div class="social-share" data-image="/2023/10/13/%E7%AC%AC%E4%B8%89%E7%AB%A0%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/image-7.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/16/%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95/" title="第四章 动态规划算法"><img class="cover" src="/./images/theme/defaultCover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">第四章 动态规划算法</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/" title="第二章 多臂老虎机与探索问题"><img class="cover" src="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">第二章 多臂老虎机与探索问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/10/10/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="第一章 强化学习基本概念"><img class="cover" src="/2023/10/10/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">第一章 强化学习基本概念</div></div></a></div><div><a href="/2023/11/06/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="第七章 基于值函数的深度强化学习"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-06</div><div class="title">第七章 基于值函数的深度强化学习</div></div></a></div><div><a href="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/" title="第二章 多臂老虎机与探索问题"><img class="cover" src="/2023/10/11/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA%E4%B8%8E%E6%8E%A2%E7%B4%A2%E9%97%AE%E9%A2%98/image.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-11</div><div class="title">第二章 多臂老虎机与探索问题</div></div></a></div><div><a href="/2023/10/16/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="第五章 基于值函数的无模型强化学习"><img class="cover" src="/2023/10/16/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%9F%BA%E4%BA%8E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/image.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">第五章 基于值函数的无模型强化学习</div></div></a></div><div><a href="/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/" title="第六章 规划与学习"><img class="cover" src="/2023/11/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%A7%84%E5%88%92%E4%B8%8E%E5%AD%A6%E4%B9%A0/image-20231106193427758.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-06</div><div class="title">第六章 规划与学习</div></div></a></div><div><a href="/2023/10/16/%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95/" title="第四章 动态规划算法"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">第四章 动态规划算法</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="toc-text">第三章 马尔可夫决策过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BB%8E%E7%AE%80%E5%8D%95%E5%88%B0%E5%A4%8D%E6%9D%82"><span class="toc-text">问题从简单到复杂</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%86%B3%E7%AD%96%E5%88%B0%E6%9C%89%E7%8A%B6%E6%80%81%E5%86%B3%E7%AD%96"><span class="toc-text">从无状态决策到有状态决策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%86%B3%E7%AD%96%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E9%94%AE%E7%8E%AF%E5%A2%83"><span class="toc-text">解决决策问题的关键环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E7%8E%87%E8%BD%AE%E4%B8%8E%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B"><span class="toc-text">概率轮与随机过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B-1"><span class="toc-text">马尔可夫过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫奖励过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%90%88episode"><span class="toc-text">回合(episode)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E9%95%BF%E6%9C%9F%E6%80%BB%E4%BD%93%E6%95%88%E6%9E%9C%E7%9A%84%E8%AF%84%E4%BC%B0%E5%9B%9E%E6%8A%A5"><span class="toc-text">对长期总体效果的评估——回报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-text">价值函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫决策过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mdp%E7%9A%84%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-text">MDP的动态性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mdp%E4%B8%8B%E7%9A%84%E5%8A%A8%E4%BD%9C%E4%B8%8E%E7%AD%96%E7%95%A5"><span class="toc-text">MDP下的动作与策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8Emdp%E5%8A%A8%E6%80%81%E7%8E%AF%E5%A2%83%E4%BA%A4%E4%BA%92"><span class="toc-text">与MDP动态环境交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%A0%E7%94%A8%E5%BA%A6%E9%87%8F%E5%92%8C%E7%AD%96%E7%95%A5"><span class="toc-text">占用度量和策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%9B%AE%E6%A0%87%E4%B8%8E%E8%B4%9D%E5%B0%94%E6%9B%BC%E7%AD%89%E5%BC%8F"><span class="toc-text">强化学习的目标与贝尔曼等式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84bellman%E7%AD%89%E5%BC%8F"><span class="toc-text">价值函数的Bellman等式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BC%98%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-text">最优价值函数</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By DogWY</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
