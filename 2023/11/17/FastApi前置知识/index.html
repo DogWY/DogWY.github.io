@@ -1,0 +1,644 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>FastApi前置知识 | 狗东西's博客</title><meta name="author" content="DogWY"><meta name="copyright" content="DogWY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="FastApi——前置知识  本文是本人在学习FastApi官方文档时的笔记, 其实说是笔记, 也只是本人将文档部分的内容进行了翻译而已.  Python的类型提示 众所周知, Python是一种弱类型的语言, 我们不需要在生命变量的时候指定变量的类型. 这让Python变得更加易上手且精简, 但是也让Python变得没那么“严谨”, 同时结合Python逐行解释执行的特点,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastApi前置知识">
+<meta property="og:url" content="https://dogwy.github.io/2023/11/17/FastApi%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="狗东西&#39;s博客">
+<meta property="og:description" content="FastApi——前置知识  本文是本人在学习FastApi官方文档时的笔记, 其实说是笔记, 也只是本人将文档部分的内容进行了翻译而已.  Python的类型提示 众所周知, Python是一种弱类型的语言, 我们不需要在生命变量的时候指定变量的类型. 这让Python变得更加易上手且精简, 但是也让Python变得没那么“严谨”, 同时结合Python逐行解释执行的特点,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dogwy.github.io/images/theme/defaultCover.png">
+<meta property="article:published_time" content="2023-11-17T06:32:51.000Z">
+<meta property="article:modified_time" content="2023-11-20T10:52:00.981Z">
+<meta property="article:author" content="DogWY">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="FastAPI">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogwy.github.io/images/theme/defaultCover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dogwy.github.io/2023/11/17/FastApi%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'FastApi前置知识',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-20 18:52:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/theme/logo01.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/./images/theme/defaultCover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="狗东西's博客"><span class="site-name">狗东西's博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">FastApi前置知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-11-17T06:32:51.000Z" title="Created 2023-11-17 14:32:51">2023-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-11-20T10:52:00.981Z" title="Updated 2023-11-20 18:52:00">2023-11-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FastAPI/">FastAPI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="FastApi前置知识"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="fastapi前置知识">FastApi——前置知识</h1>
+<blockquote>
+<p>本文是本人在学习<a
+target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/tutorial/">FastApi官方文档</a>时的笔记,
+其实说是笔记, 也只是本人将文档部分的内容进行了翻译而已.</p>
+</blockquote>
+<h2 id="python的类型提示">Python的类型提示</h2>
+<p>众所周知, Python是一种弱类型的语言,
+我们不需要在生命变量的时候指定变量的类型.
+这让Python变得更加易上手且精简, 但是也让Python变得没那么“严谨”,
+同时结合Python逐行解释执行的特点,
+这导致我们在写程序的一些浅显的类型bug只能在运行时被检测到,
+这对大型的项目来说无疑是非常致命的.</p>
+<p>此外, 如果我们不通过某种方法来制定Python变量的数据类型,
+那么我们就近乎于放弃了现代IDE的代码补全功能,
+因为IDE很难通过我们的Python代码直接解析出变量的类型,
+也就无法给你提示变量有哪些附属方法了.</p>
+<p>处于以上原因, Python从3.5版本开始为Python提供了可选的类型声明,
+这为用户使用IDE的代码补全功能提供了便利,
+也让Python编写的代码有了更高的严谨性.</p>
+<h3 id="声明类型">声明类型</h3>
+<h4 id="简单类型">简单类型</h4>
+<p>我们可以声明所有的Python中的标准类型:</p>
+<ul>
+<li>int</li>
+<li>float</li>
+<li>bool</li>
+<li>bytes</li>
+</ul>
+<p>像下面这样:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_items</span>(<span class="params">item_a: <span class="built_in">str</span>, item_b: <span class="built_in">int</span>, item_c: <span class="built_in">float</span>, item_d: <span class="built_in">bool</span>, item_e: <span class="built_in">bytes</span></span>):</span><br><span class="line">    <span class="keyword">return</span> item_a, item_b, item_c, item_d, item_d, item_e</span><br></pre></td></tr></table></figure>
+<h4 id="带有类型参数的泛型类型">带有类型参数的泛型类型</h4>
+<p>在Python有一些数据结构能够包含其他的值,
+比如<code>dict</code>、<code>list</code>、<code>set</code>和<code>tuple</code>.
+并且这些内部的值也有他们各自的类型.</p>
+<p>这些带有内部类型的类型被称为“泛型”. 并且他们可以被声明,
+甚至他们的内部的类型也可以被声明.</p>
+<p>为了声明这些类型和他们的内部类型,
+你能够调用Python的内置模块<code>typing</code>.
+他是专门用来支持这些类型提示的.</p>
+<blockquote>
+<p>值得注意的是<code>typing</code>并不是在所有版本中都可用的, 首先虽然,
+类型提示是在<code>3.5</code>版本加入的,
+但是你需要在<code>3.6+</code>的版本才可以正常的使用他们(我猜是第一版不太好用吧😆).
+此外, 在<code>3.9+</code>版本的情况下,
+你甚至不需要单独的<code>import typing</code>, 因为他已经太常用了,
+以至于Python进一步的内置了他.</p>
+</blockquote>
+<h5 id="list">List</h5>
+<p>一个典型的例子就是List类型,
+我们可以如下声明一个字符串类型的数组作为函数的参数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_items</span>(<span class="params">items: <span class="built_in">list</span>[<span class="built_in">str</span>]</span>):</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">        <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>方括号中的类型被称为“类型参数”</p>
+<p>这个例子中, <code>str</code>被作为参数传递给<code>list</code></p>
+<p>这里需要注意的是, 本文假定了我们在使用<code>3.9+</code>版本的Python,
+或者更确切的说, 我们是在使用<code>3.10</code>版本的Python.
+由于版本的迭代,
+之前的版本的实现方式会有一些不同.(比如在<code>3.8-</code>版本下,
+此时在声明参数时需要写做: <code>List[str]</code>, 是的没错,
+他大写了)</p>
+</blockquote>
+<p>以上的例子说明了,
+<code>items</code>变量是一个<code>list</code>类型的对象,
+并且它内部每一个元素都是<code>str</code>.</p>
+<p>经过以上的简单提示, 你就可以在你常用的IDE中获取代码补全提示了:</p>
+<figure>
+<img src="./image05.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h5 id="tuple-and-set">Tuple and Set</h5>
+<p>你可以以同样的方式声明一个<code>tuple</code>或者<code>set</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_items</span>(<span class="params">items_t: <span class="built_in">tuple</span>[<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">str</span>], items_s: <span class="built_in">set</span>[<span class="built_in">bytes</span>]</span>):</span><br><span class="line">    <span class="keyword">return</span> items_t, items_s</span><br></pre></td></tr></table></figure>
+<p>以上代码表示:</p>
+<ul>
+<li>变量<code>item_t</code>是一个<code>tuple</code>类型的对象,
+并且其内部有且只有三个元素. 期中, 第一个元素为<code>int</code>,
+第二个元素为<code>int</code>, 第三个元素为<code>str</code></li>
+<li>变量<code>item_s</code>是一个<code>set</code>类型的对象,
+并且它内部的每一个元素都是<code>bytes</code></li>
+</ul>
+<h5 id="dict">Dict</h5>
+<p>为了定义一个<code>dict</code>, 你需要传入两个类型参数,
+并且通过<code>,</code>分割他们</p>
+<p>其中第一个类型参数代表了<code>dict</code>中<code>key</code>的类型</p>
+<p>第二个类型参数代表了<code>dict</code>中<code>value</code>的类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_items</span>(<span class="params">prices: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">float</span>]</span>):</span><br><span class="line">    <span class="keyword">for</span> item_name, item_price <span class="keyword">in</span> prices.items():</span><br><span class="line">        <span class="built_in">print</span>(item_name)</span><br><span class="line">        <span class="built_in">print</span>(item_price)</span><br></pre></td></tr></table></figure>
+<h5 id="union">Union</h5>
+<p>你可以指定一个变量为几个限定类型中的任意一个, 比如,
+这个变量为<code>int</code>或<code>str</code></p>
+<p>在<code>3.10+</code>版本的Python中,
+你可通过<code>|</code>来实现这个效果, 如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_item</span>(<span class="params">item: <span class="built_in">int</span> | <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
+<p>这意味着,
+<code>item</code>这个元素是<code>int</code>类型或者<code>str</code>类型.</p>
+<blockquote>
+<p>注意, <code>|</code>这个语法是<code>3.10</code>版本引入的,
+更加通用的写法是<code>Union[int, str]</code>,
+是的是通过<code>Union[...]</code>来达到效果的</p>
+</blockquote>
+<h5 id="可能的none值">可能的None值</h5>
+<p>你可以一个变量, 他可以是你制定的类型的实例,
+也可以是一个<code>None</code></p>
+<p>在<code>3.9-</code>版本中,
+你可通过<code>Something| None</code>来达到以上效果:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">say_hi</span>(<span class="params">name: <span class="built_in">str</span> | <span class="literal">None</span> = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> name <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Hey <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Hello World&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>相应的更通用的写法如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Optional</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hi</span>(<span class="params">name: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> name <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Hey <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Hello World&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>此外, 在看过了<code>Union</code>之后, 你或许还能想到另一种写法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hi</span>(<span class="params">name: <span class="type">Union</span>[<span class="built_in">str</span>, <span class="literal">None</span>] = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> name <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Hey <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Hello World&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>实际上, 这三种写法本质上是相同的,
+<code>Option[...]</code>是<code>Union[..., None]</code>的简写,
+而<code>... | None</code>也是<code>Union[..., None]</code>的语法糖</p>
+<h5 id="使用union还是optional">使用Union还是Optional</h5>
+<p>如果你是<code>3.10+</code>版本的用户,
+<code>FastApi</code>作者给出的建议是:</p>
+<ul>
+<li>避免使用<code>Optional[...]</code></li>
+<li>使用<code>Union[..., None]</code>来代替他</li>
+</ul>
+<p>虽然这两种写法是等价的,
+但是作者仍然推荐<code>Union</code>而不是<code>Optional</code>,
+因为<code>Optional</code>暗含了这个参数是可选的这一含义,
+而<code>Union[..., None]</code>的含义更加清晰.</p>
+<p>不过, 如果你在使用<code>3.10+</code>版本的Python的话,
+你无需忧虑这些问题, 直接使用<code>|</code>就好</p>
+<h5 id="通用类型">通用类型</h5>
+<p>希望你没有忘记, 通用类型是指<code>list</code>这样的,
+内部元素可以有自己的类型的类型. 他们有:</p>
+<ul>
+<li>list</li>
+<li>tuple</li>
+<li>dict</li>
+<li>dict</li>
+</ul>
+<blockquote>
+<p>注意以上通用类型在使用时, 如果你在使用<code>3.9-</code>版本的Python
+,请首字母大写</p>
+</blockquote>
+<ul>
+<li>Union</li>
+<li>Optional</li>
+<li>...</li>
+</ul>
+<h5 id="类作为变量的类型">类作为变量的类型</h5>
+<p>你能够使用一个自定义的类作为一个变量的类型, 比如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name: <span class="built_in">str</span></span>):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_person_name</span>(<span class="params">one_person: Person</span>):</span><br><span class="line">    <span class="keyword">return</span> one_person.name</span><br></pre></td></tr></table></figure>
+<p>这样, 你也可以享受现代IDE带来的便捷:</p>
+<figure>
+<img src="./image06.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<blockquote>
+<p>特别强调一下,
+以上的代码意味着<code>one_person</code>变量是一个<code>Person</code>的实例,
+而不是<code>Person</code>类型本身</p>
+</blockquote>
+<h4 id="pydantic模型">Pydantic模型</h4>
+<p><code>Pydantic</code>是一个用来执行数据校验的Python库</p>
+<p>你将数据的形状“shape”声明为带有属性的类,
+并且每一个属性都有一个类型</p>
+<p>然后, 你通过一些值来创建了一个这个类的实例,
+此时<code>Pydantic</code>会检验这些值, 并且尝试将它们转化为合适的类型,
+最后返回给你一个包含所有数据的对象.</p>
+<p>一下是一个例子:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    <span class="built_in">id</span>: <span class="built_in">int</span></span><br><span class="line">    name: <span class="built_in">str</span> = <span class="string">&quot;John Doe&quot;</span></span><br><span class="line">    signup_ts: datetime | <span class="literal">None</span> = <span class="literal">None</span></span><br><span class="line">    friends: <span class="built_in">list</span>[<span class="built_in">int</span>] = []</span><br><span class="line"></span><br><span class="line">external_data = &#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: <span class="string">&quot;123&quot;</span>,</span><br><span class="line">    <span class="string">&quot;signup_ts&quot;</span>: <span class="string">&quot;2017-06-01 12:22&quot;</span>,</span><br><span class="line">    <span class="string">&quot;friends&quot;</span>: [<span class="number">1</span>, <span class="string">&quot;2&quot;</span>, <span class="string">b&quot;3&quot;</span>],</span><br><span class="line">&#125;</span><br><span class="line">user = User(**external_data)</span><br><span class="line"><span class="built_in">print</span>(user)</span><br><span class="line"><span class="comment"># &gt; User id=123 name=&#x27;John Doe&#x27; signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]</span></span><br><span class="line"><span class="built_in">print</span>(user.<span class="built_in">id</span>)</span><br><span class="line"><span class="comment"># &gt; 123</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>FastApi是基于<code>Pydantic</code>的</p>
+</blockquote>
+<h3 id="带有元数据注释的类型提示">带有元数据注释的类型提示</h3>
+<p>Python还有一个特性, 那就是允许使用<code>Annotated</code></p>
+<p>在<code>3.9+</code>的版本中,
+<code>Annotated</code>是<code>typing</code>标准库的一部分,
+你可以如下使用它</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Annotated</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">name: Annotated[<span class="built_in">str</span>, <span class="string">&quot;this is just metadata&quot;</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>虽然, 我们前面说过, <code>3.9+</code>版本之后,
+我们在使用类型提示的时候不需要单独的<code>import typing</code>,
+但如果你需要使用<code>typing</code>中的别的功能,
+你还是需要单独<code>import typing</code>的</p>
+</blockquote>
+<p>Python并不会对<code>Annotated</code>做任何事,
+对于编辑器和其他的工具来说,
+<code>name</code>的类型仍然是<code>str</code>.</p>
+<blockquote>
+<p>听上去似乎<code>Annotated</code>没什么用</p>
+</blockquote>
+<p>但是你能够通过<code>Annotated</code>来为FastApi提供元数据,
+来声明你希望你的application要如何行动</p>
+<p>值得注意的是,
+你传给<code>Annotated</code>的第一个参数是<code>name</code>的实际类型,
+而其他的部分都是给其他工具的元数据.</p>
+<p>如果你知道元数据是什么, 你自然能意识到<code>Annotated</code>的作用,
+但是如果你并不知道, 先记住有这么个东西, 之后你会见识的他的强大的.</p>
+<h3 id="fastapi中的类型提示">FastApi中的类型提示</h3>
+<p>在FastApi中, 我们利用类型提示完成了几件事</p>
+<p>使用FastApi你可以声明参数的类型类型, 然后你就可以:</p>
+<ul>
+<li>得到IDE的支持</li>
+<li>类型检查</li>
+</ul>
+<p>并且FastApi还会基于声明来完成:</p>
+<ul>
+<li><strong>定义需求</strong>：从请求路径参数、查询参数、标头、主体、依赖项等。</li>
+<li><strong>转换数据</strong>：从请求到所需的类型。</li>
+<li><strong>验证数据</strong>: 来自每个请求：
+<ul>
+<li>当数据无效时生成<strong>自动返回给客户端的错误。</strong></li>
+</ul></li>
+<li>使用 OpenAPI记录API：
+<ul>
+<li>然后由自动交互式文档用户界面使用。</li>
+</ul></li>
+</ul>
+<h2 id="并发和asyncawait">并发和async/await</h2>
+<p>这部分内容, 我们会介绍一些有关路径操作函数的 async def
+语法的详细信息以及有关异步代码、并发性和并行性的一些背景知识。</p>
+<p>现代版本的Python支持你通过“异步代码”来使用“协程”(<code>coroutines</code>),
+或者说通过<code>async</code>和<code>await</code>语法.</p>
+<p>让我们通过如下几部分内容来了解这个语法:</p>
+<ul>
+<li>异步代码</li>
+<li><code>async</code>和<code>await</code></li>
+<li>协程 <code>coroutines</code></li>
+</ul>
+<h3 id="异步代码">异步代码</h3>
+<p>异步代码仅仅意味着语言能够通过某种方式来告诉program, 在某个时刻,
+program需要等待一些事情在其他地方完成.
+我们暂且管这个“一些事情”叫做“慢文件”.</p>
+<p>所以, 在这段时间里, 计算机可以去做一些别的工作, 等待慢文件的完成</p>
+<p>然后, 计算机将会在任何可能的时候回来,
+比如计算机再次进入等待状态或者计算机完成了当时的所有工作.
+并且计算机会查看等待的任何任务是否已经完成,
+并且执行它必须执行的操作.</p>
+<p>接下来, 计算机会完成第一个任务(慢文件), 并且继续与他有关的任何事</p>
+<p>“一些事情”通常是指相对”慢“的一些IO操作, 比如:</p>
+<ul>
+<li>来自客户端的数据通过网络发送</li>
+<li>您的程序发送的数据，客户端通过网络接收</li>
+<li>磁盘中文件的内容由系统读取并提供给您的程序</li>
+<li>您的程序提供给系统以写入磁盘的内容</li>
+<li>远程API操作</li>
+<li>要完成的数据库操作</li>
+<li>数据库查询返回结果</li>
+<li>ETC</li>
+</ul>
+<p>因为执行这些任务的时间大部分都在等待IO操作,
+所以他们被称为IO绑定操作</p>
+<p>之所以称之为“异步”,
+这是因为计算机/程序不必与慢速任务“同步”执行(等待慢速任务完成,
+同时什么也不做), 来获取任务结果并继续工作</p>
+<p>相反, 通过一个“异步”系统, 任务可以稍微等待计算机/程序完成它要做的事,
+然后获取结果并继续工作.</p>
+<p>对于“同步”, 他们通常使用一个属于“顺序”,
+因为计算机/程序在切换到不同任务之前按顺序遵守所有步骤,
+即使这些任务涉及等待.</p>
+<h4 id="并发汉堡">并发汉堡</h4>
+<p>现在你和你喜欢的人一起去买快餐, 首先你们要排队.
+收银员从你的前面那个人那里接受订单:</p>
+<figure>
+<img src="./concurrent-burgers-01.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>现在轮到你了, 你为你和你的暗恋对象买了两个美味的汉堡.</p>
+<figure>
+<img src="./concurrent-burgers-02.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后收银员告诉了厨房中的厨师一些信息,
+然后厨师知道了要为你准备两个美味汉堡.</p>
+<figure>
+<img src="./concurrent-burgers-03.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>你付钱之后, 收银员给你了一个号码牌</p>
+<figure>
+<img src="./concurrent-burgers-04.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>在你等待的时候, 你拿着你的号码牌, 并且挑了一张桌子.</p>
+<p>在你和你喜欢的人坐在餐桌边上等待汉堡做好的时候,
+你可以花时间欣赏你喜欢的人是多么的好看、有趣和聪明✨😍✨.</p>
+<blockquote>
+<p>这个emoji是直接copy自官方文档的.😆</p>
+</blockquote>
+<figure>
+<img src="./concurrent-burgers-05.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>当你等待并且和你喜欢的人交谈时, 你时不时的会查看柜台上显示的号码,
+看看是否轮到你了.</p>
+<p>然后, 在某个时刻, 终于轮到你了. 你走到柜台, 拿了汉堡,
+然后回到了你的餐桌.</p>
+<figure>
+<img src="./concurrent-burgers-06.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后, 你和你喜欢的人一次吃着汉堡, 度过了一段愉快的时光</p>
+<figure>
+<img src="./concurrent-burgers-07.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>想想一下, 你是故事中的一个计算机/程序</p>
+<p>当你在排队时, 你只是在闲着, 等着轮到你, 没有做任何“高效”的事情.
+但是排队速度很快, 因为收银员只是接受订单(不生产订单)</p>
+<p>然后, 当轮到你的时候, 你要做实际的“生产性”工作: 你处理菜单,
+决定你想要什么, 采纳你喜欢的人的建议, 付钱,
+检查你是否提供了正确的账单和卡片, 检查你的收费是否正确,
+检查订单中的商品是否正确等.</p>
+<p>但是之后, 你从柜台走开, 拿着你的号码牌坐在餐桌旁.
+能够转移你的注意力到你喜欢的人身上, 并且继续“work”.
+然后你再次可以做一些“生产性”工作, 比如和你喜欢的人聊天.</p>
+<blockquote>
+<p>毕竟, 你此行的核心目的肯定是加深你和她的感情对吧.
+肯定不是只为了吃饭吧? 不会吧? 不会吧?</p>
+</blockquote>
+<p>然后, 收银员说“我已经完成了汉堡”, 然后把你的号码显示在前台上.
+你听到时候, 并不会立刻跳起来冲到前台, 因为你知道没人会偷走你的汉堡,
+因为他们有自己的号码, 有自己汉堡.</p>
+<p>于是, 等你和喜欢的人结束了当前话题后, 你才会站起来去拿汉堡.</p>
+<p>然后你去柜台，到现在已经完成的初始任务，挑选汉堡，说声谢谢，然后把它们带到餐桌上。这就完成了与计数器交互的步骤/任务。这反过来又创建了一个新任务“吃汉堡”，但前一个“获取汉堡”已经完成了。</p>
+<h4 id="并行汉堡">并行汉堡</h4>
+<p>现在我们在设想一种情况.</p>
+<p>你和你喜欢的人一起去吃并行汉堡.</p>
+<p>你排队时,
+几个(假设是8个)同时担任厨师的收银员正在接收你前面的人的订单.</p>
+<p>在你离开柜台之前, 每个人都在等待汉堡准备好,
+因为8个收银员都会在准备好当前订单的汉堡之后才接收下一个订单.</p>
+<figure>
+<img src="./parallel-burgers-01.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后又轮到你了, 你为你和你喜欢的人点了两个美味汉堡, 然后付钱</p>
+<figure>
+<img src="./parallel-burgers-02.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后收银员冲进了厨房.</p>
+<p>然后你站在柜台前开始等待, 以确保不会有人拿走你的汉堡(毕竟,
+你们现在没有号码牌了)</p>
+<figure>
+<img src="./parallel-burgers-03.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>由于您和您的暗恋对象都忙于不让任何人挡在您前面并在他们到达时拿走您的汉堡，因此您无法关注您的暗恋对象。</p>
+<p>这是“同步”的工作，你与收银员/厨师“同步”。你必须等待并在收银员/厨师吃完汉堡并将其交给你的那一刻到达那里，否则其他人可能会拿走它们。</p>
+<figure>
+<img src="./parallel-burgers-04.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后，您的收银员/厨师在柜台前等待了很长时间后，终于带着您的汉堡回来了。</p>
+<figure>
+<img src="./parallel-burgers-05.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>你拿着汉堡，和你喜欢的人一起走到餐桌旁。</p>
+<p>你只要吃掉它们，就完成了。</p>
+<figure>
+<img src="./parallel-burgers-06.png" alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>显然, 你和你喜欢的人并没有多少时间来加深感情了.</p>
+<p>在这个并行汉堡的场景中, 你也是一台计算机/程序,
+有两个处理器(你和你的暗恋对象), 两者都在等待并专注于等待汉堡的制作,
+并等待了很长一段时间</p>
+<p>快餐店有8个员工, 快餐店有 8
+名加工人员（收银员/厨师）。而并发营业的汉堡店可能只有 2
+名（一名收银员和一名厨师）。</p>
+<p>但最终的体验仍然不是最好的。</p>
+<h4 id="汉堡结论">汉堡结论</h4>
+<p>在这种“和你喜欢的人一起吃快餐汉堡”的场景中，由于等待时间很长，所以拥有一个并发系统更有意义</p>
+<p>大多数 Web 应用程序都是这种情况。</p>
+<p>很多很多用户，但您的服务器正在等待他们的不太好的连接来发送他们的请求。</p>
+<p>然后再次等待回复回来。</p>
+<p>这种“等待”以微秒为单位，但总而言之，最终还是需要等待很多时间。</p>
+<p>这就是为什么为 Web API 使用异步代码非常有意义。</p>
+<p>这种异步性使得 NodeJS 流行起来（尽管 NodeJS 不是并行的），这也是 Go
+作为编程语言的优势。</p>
+<p><strong>这与使用FastAPI</strong>获得的性能水平相同。</p>
+<p>由于可以同时具有并行性和异步性，因此您可以获得比大多数经过测试的
+NodeJS 框架更高的性能，并且与 Go 相当，Go 是一种更接近 C 的编译语言</p>
+<h4 id="并发比并行好吗">并发比并行好吗?</h4>
+<p>不是的! 这个故事并不是这个意思</p>
+<p>并发与并行并不相同. 并且并发在涉及许多等待的场景中表现的更好.
+因此，对于 Web
+应用程序开发来说，它通常比并行性要好得多。但并不适用于一切</p>
+<h4 id="并发并行-web机器学习">并发+并行: Web+机器学习</h4>
+<p>使用<strong>FastAPI，</strong>您可以利用 Web
+开发中非常常见的并发性（这也是 NodeJS 的主要吸引力）。</p>
+<p>但是，您还可以利用并行性和多处理（并行运行多个进程）的优势来处理<strong>CPU
+密集型</strong>工作负载，例如机器学习系统中的工作负载。</p>
+<p>再加上 Python
+是<strong>数据科学</strong>、机器学习，尤其是深度学习的主要语言这一简单事实，使得
+FastAPI 非常适合数据科学/机器学习 Web API
+和应用程序（以及其他许多应用程序）。</p>
+<blockquote>
+<p>如何在生产中实现这种并行性, 请参阅有关部署的<a
+target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/deployment/">部分</a></p>
+</blockquote>
+<h3 id="async和await"><code>async</code>和<code>await</code></h3>
+<p>现代版本的Python使用一种非常直观的方式来定义异步代码.
+着使得他看起来就跟“顺序”代码一样,
+并且它会在正确的时刻为你进行“awaiting”</p>
+<p>当一个操作将会需要进行等待, 并且他已经支持了这些Python的新特性,
+你能够如下操作:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">burgers = <span class="keyword">await</span> get_burgers(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>关键是<code>await</code>. 他告诉Python,
+他必须要等待<code>get_burgers(2)</code>来完成它手头的工作,
+才能将结果写入到burgers变量中. 并且, Python也会知道,
+它能够同时继续执行并且做一些其他的工作(比如接受另一个请求)</p>
+<p>为了让<code>await</code>起作用, 它必须位于一个支持异步语法的函数中.
+为了让一个函数支持异步语法,
+你可以通过<code>async def</code>来声明他:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_burgers</span>(<span class="params">number: <span class="built_in">int</span></span>):</span><br><span class="line">  <span class="comment"># Do some asynchronous stuff to create the burgers</span></span><br><span class="line">  <span class="keyword">return</span> burgers</span><br></pre></td></tr></table></figure>
+<p>而不是<code>def</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is not asynchronous</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_sequential_burgers</span>(<span class="params">number: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="comment"># Do some sequential stuff to create the burgers</span></span><br><span class="line">    <span class="keyword">return</span> burgers</span><br></pre></td></tr></table></figure>
+<p>借助<code>async def</code>, Python知道了在函数的内部,
+它必须要注意<code>await</code>表达式, 并且它能够暂停这个函数的执行,
+并且在他完成并返回之前执行别的任务.</p>
+<p>当你要用调用<code>async def</code>函数时,
+你必须要配套使用<code>await</code>,
+否则他不会起作用(或者说不会异步):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This won&#x27;t work, because get_burgers was defined with: async def</span></span><br><span class="line">burgers = get_burgers(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>所以, 如果你使用的库告诉你它能够伴随着<code>await</code>来使用它,
+你就需要在定义路径操作函数时使用<code>async def</code>, 就像:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&#x27;/burgers&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_burgers</span>():</span><br><span class="line">    burgers = <span class="keyword">await</span> get_burgers(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> burgers</span><br></pre></td></tr></table></figure>
+<h4 id="更多的技术细节">更多的技术细节</h4>
+<p>你可能注意到了<code>await</code>只能够被用在<code>async def</code>定义的函数内部.</p>
+<p>但是同时,
+<code>async def</code>定义的函数必须要借助<code>await</code>调用.</p>
+<p>所以, 是鸡生蛋呢?还是蛋生鸡呢?</p>
+<p>如果你在使用FastApi, 你不必考虑这个问题, 因为"The
+First"是你的路径操作函数, 并且FastApi知道如何做争取的事情.</p>
+<p>但是如果你想要在不使用FastApi的情况下使用<code>async</code>/<code>await</code>,
+那你就需要注意个问题了.</p>
+<h3 id="协程coroutines">协程(Coroutines)</h3>
+<p>协程是一个蛮奇特的术语, 指的是<code>async def</code>函数.
+Python知道它就像一个函数, 他可以启动, 也会在某个时刻停止,
+但是只要它内部有<code>await</code>, 那么它也可能在内部暂停.</p>
+<p>但是,
+将异步代码与<code>async</code>和<code>await</code>很多时候被合称为协程.
+他能够和GO的“协程”特性相媲美</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://dogwy.github.io">DogWY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://dogwy.github.io/2023/11/17/FastApi%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/">https://dogwy.github.io/2023/11/17/FastApi%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a><a class="post-meta__tags" href="/tags/FastAPI/">FastAPI</a><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="/./images/theme/defaultCover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/11/17/FastApi%E5%9F%BA%E7%A1%80/" title="FastApi基础"><img class="cover" src="/./images/theme/defaultCover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">FastApi基础</div></div></a></div><div class="next-post pull-right"><a href="/2023/11/14/Nestjs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%BF%AB%E9%80%9F%E6%8E%8C%E6%8F%A1NestCLI/" title="Nestjs学习笔记——快速掌握NestCLI"><img class="cover" src="/./images/theme/defaultCover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Nestjs学习笔记——快速掌握NestCLI</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/11/17/FastApi%E5%9F%BA%E7%A1%80/" title="FastApi基础"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-17</div><div class="title">FastApi基础</div></div></a></div><div><a href="/2023/11/14/Nestjs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%BF%AB%E9%80%9F%E6%8E%8C%E6%8F%A1NestCLI/" title="Nestjs学习笔记——快速掌握NestCLI"><img class="cover" src="/./images/theme/defaultCover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-14</div><div class="title">Nestjs学习笔记——快速掌握NestCLI</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fastapi%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">FastApi——前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA"><span class="toc-text">Python的类型提示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E7%B1%BB%E5%9E%8B"><span class="toc-text">声明类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B"><span class="toc-text">简单类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E7%9A%84%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B"><span class="toc-text">带有类型参数的泛型类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#list"><span class="toc-text">List</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tuple-and-set"><span class="toc-text">Tuple and Set</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dict"><span class="toc-text">Dict</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#union"><span class="toc-text">Union</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84none%E5%80%BC"><span class="toc-text">可能的None值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8union%E8%BF%98%E6%98%AFoptional"><span class="toc-text">使用Union还是Optional</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="toc-text">通用类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%BD%9C%E4%B8%BA%E5%8F%98%E9%87%8F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-text">类作为变量的类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pydantic%E6%A8%A1%E5%9E%8B"><span class="toc-text">Pydantic模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E5%85%83%E6%95%B0%E6%8D%AE%E6%B3%A8%E9%87%8A%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA"><span class="toc-text">带有元数据注释的类型提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastapi%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA"><span class="toc-text">FastApi中的类型提示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8Casyncawait"><span class="toc-text">并发和async&#x2F;await</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%A3%E7%A0%81"><span class="toc-text">异步代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%B1%89%E5%A0%A1"><span class="toc-text">并发汉堡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%B1%89%E5%A0%A1"><span class="toc-text">并行汉堡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%89%E5%A0%A1%E7%BB%93%E8%AE%BA"><span class="toc-text">汉堡结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%AF%94%E5%B9%B6%E8%A1%8C%E5%A5%BD%E5%90%97"><span class="toc-text">并发比并行好吗?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%B9%B6%E8%A1%8C-web%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">并发+并行: Web+机器学习</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#async%E5%92%8Cawait"><span class="toc-text">async和await</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82"><span class="toc-text">更多的技术细节</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8Bcoroutines"><span class="toc-text">协程(Coroutines)</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By DogWY</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
