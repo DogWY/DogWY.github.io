@@ -3,23 +3,23 @@
 layout: home
 
 hero:
-  name: "My Awesome Project"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "DogWY's Document"
+  text: ""
+  tagline: 此网站一为用作记录，二为用作在线文档，三位用作分享（不过因该没人看）。
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: 你还是个PHD啊？
       link: /markdown-examples
     - theme: alt
-      text: API Examples
+      text: 看看开发
       link: /api-examples
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: PHD
+    details: 目前在BJTU攻读计算机科学与技术专业的博士
+  - title: 开发
+    details: 有一颗全栈工程师的心
+  - title: 二次元
+    details: 我永远热爱二次元
 ---
 
