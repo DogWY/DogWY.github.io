@@ -9,11 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 你还是个PHD啊？
-      link: /markdown-examples
+      link: /phd/
     - theme: alt
       text: 看看开发
-      link: /api-examples
-
+      link: /developer/
 features:
   - title: PHD
     details: 目前在BJTU攻读计算机科学与技术专业的博士
