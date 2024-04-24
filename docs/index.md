@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "DogWY's Document"
   text: ""
-  tagline: 此网站一为用作记录，二为用作在线文档，三位用作分享（不过因该没人看）。
+  tagline: 此网站一为用作记录，二为用作在线文档，三为用作分享（不过应该没人看）。
   actions:
     - theme: brand
       text: 你还是个PHD啊？
