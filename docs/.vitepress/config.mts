@@ -61,7 +61,7 @@ export default defineConfig({
         {
           text: 'Scrapy爬虫',
           items: [
-            {text: '第一步', link: '/skill/scrapy/第一步.md'},
+            {text: '第一步', link: '/skill/scrapy/第一步'},
           ]
         }
       ]
