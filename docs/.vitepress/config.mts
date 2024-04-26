@@ -11,6 +11,17 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    lastUpdated:{
+      text: '最后更新于',
+      formatOptions:{
+        dateStyle: 'full',
+        timeStyle: 'medium'
+      }
+    },
+    outline: {
+      level: 'deep',
+      label: '大纲'
+    },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },

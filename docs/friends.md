@@ -1,5 +1,7 @@
 ---
 sidebar: false
+outline: false
+lastUpdated: false
 ---
 
 # 友链

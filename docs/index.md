@@ -16,7 +16,7 @@ hero:
 features:
   - title: PHD
     details: 目前在BJTU攻读计算机科学与技术专业的博士
-  - title: 开发
+  - title: 乱搞
     details: 有一颗全栈工程师的心
   - title: 二次元
     details: 我永远热爱二次元
