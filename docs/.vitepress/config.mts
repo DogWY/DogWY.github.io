@@ -57,7 +57,7 @@ export default defineConfig({
           ]
         },
       ],
-      '/skill':[
+      '/skill/':[
         {
           text: 'Scrapy爬虫',
           items: [
