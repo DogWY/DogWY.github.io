@@ -16,6 +16,7 @@ export default defineConfig({
       { text: '主页', link: '/' },
       { text: 'PHD', link: '/phd/' },
       { text: '工程师', link: '/developer/' },
+      { text: '奇技淫巧', link: '/skill/'},
       { text: '二次元', link: '/anime/'},
       { text: '友链', link: '/friends'}
     ],
@@ -55,6 +56,14 @@ export default defineConfig({
             { text: 'Logistic回归', link: '/phd/机器学习/Logistic回归'},
           ]
         },
+      ],
+      '/skill':[
+        {
+          text: 'Scrapy爬虫',
+          items: [
+            {text: '第一步', link: '/skill/scrapy/第一步.md'},
+          ]
+        }
       ]
     },
     socialLinks: [
