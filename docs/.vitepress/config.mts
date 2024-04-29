@@ -11,6 +11,9 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    search: {
+      provider: 'local'
+    },
     lastUpdated:{
       text: '最后更新于',
       formatOptions:{
