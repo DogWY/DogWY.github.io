@@ -1,6 +1,6 @@
 # 论文报告
 
-> 汇总本人WiFi Sensing方向的论文读书笔记（精读）
+> 汇总本人WiFi Sensing方向的论文读书(精读)
 
 ## 记录在册
 
@@ -27,7 +27,7 @@
 ### 3. Enabling Ubiquitous WiFi Sensing with Beamforming Reports
 
 > 时间：2023
->
+> 
 > 期刊：Proceedings of the ACM SIGCOMM 2023 Conference
 >
 > 关键词：`CBR`、`部署`
