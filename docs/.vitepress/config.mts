@@ -70,6 +70,18 @@ export default defineConfig({
             { text: 'Logistic回归', link: '/phd/机器学习/Logistic回归'},
           ]
         },
+        {
+          text: 'WiFi Sensing',
+          items:[
+            {text: '快速上手', link: '/phd/WiFi Sensing/快速上手'},
+            {
+              text: '论文报告', 
+              link: '/phd/WiFi Sensing/论文报告/index',
+              items:[
+              ]
+            },
+          ]
+        },
       ],
       '/skill/':[
         {
