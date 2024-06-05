@@ -60,7 +60,7 @@ export default defineConfig({
         {
           text: 'PyTorch',
           items: [
-            { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析'}
+            { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析' }
           ]
         },
         {
@@ -73,10 +73,11 @@ export default defineConfig({
         {
           text: 'WiFi Sensing',
           items:[
-            {text: '快速上手', link: '/phd/WiFi Sensing/快速上手'},
+            {text: '概述', link: '/phd/WiFi Sensing/概述'},
+            {text: '论文速读', link: '/phd/WiFi Sensing/论文速读'},
             {
-              text: '论文报告', 
-              link: '/phd/WiFi Sensing/论文报告/index',
+              text: '论文笔记', 
+              link: '/phd/WiFi Sensing/论文笔记/index',
               items:[
               ]
             },
