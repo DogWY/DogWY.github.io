@@ -75,12 +75,12 @@ export default defineConfig({
           items:[
             {text: '概述', link: '/phd/WiFi Sensing/概述'},
             {text: '论文速读', link: '/phd/WiFi Sensing/论文速读'},
-            {
-              text: '论文笔记', 
-              link: '/phd/WiFi Sensing/论文笔记/index',
-              items:[
-              ]
-            },
+          ]
+        },
+        {
+          text:'杂七杂八',
+          items: [
+            {text: 'Imuplse Function', link: '/phd/杂七杂八/Impulse Function'},
           ]
         },
       ],
