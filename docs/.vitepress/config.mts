@@ -71,6 +71,13 @@ export default defineConfig({
           ]
         },
         {
+          text: '前沿丹方',
+          link: '/phd/前沿丹方/index',
+          items:[
+            
+          ]
+        },
+        {
           text: 'WiFi Sensing',
           items:[
             {text: '概述', link: '/phd/WiFi Sensing/概述'},
