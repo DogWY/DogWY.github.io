@@ -4,7 +4,7 @@
 
 组里研究方向涉及：MIMO、RFF、强化学习、凸优化等。
 
-本人目前兴趣方向：射频指纹、WiFI Sensing、强化学习。
+本人目前兴趣方向：射频指纹、Wi-Fi Sensing、Semantic Communication、Reinforcement Learning。
 
 > 本人兴趣有点不集中，特此警醒自己。
 >

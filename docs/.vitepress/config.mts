@@ -58,6 +58,15 @@ export default defineConfig({
       ],
       '/phd/':[
         {
+          text: '无线通信',
+          link: '/phd/无线通信/index',
+          items:[
+            {text: '1. 无线通信概论', link:'/phd/无线通信/1.无线通信概论'},
+            {text: '2. 无线电传播机制', link:'/phd/无线通信/2.无线电传播机制'},
+            {text: '3. 窄带无线信道', link:'/phd/无线通信/3.窄带无线信道'},
+          ]
+        },
+        {
           text: 'PyTorch',
           items: [
             { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析' }
