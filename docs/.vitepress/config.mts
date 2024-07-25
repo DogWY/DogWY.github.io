@@ -58,20 +58,6 @@ export default defineConfig({
       ],
       '/phd/':[
         {
-          text: '无线通信',
-          link: '/phd/无线通信/index',
-          items:[
-            {text: '1. 无线通信概论', link:'/phd/无线通信/1.无线通信概论'},
-            {text: '2. 无线电传播机制', link:'/phd/无线通信/2.无线电传播机制'},
-            {text: '3. 窄带无线信道', link:'/phd/无线通信/3.窄带无线信道'},
-            {text: '4. 宽带和方向性信道', link:'/phd/无线通信/4.宽带和方向性信道'},
-            {text: '5. 数字调制解调', link:'/phd/无线通信/5.数字调制解调'},
-            {text: '6. 信道编码', link:'/phd/无线通信/6.信道编码'},
-            {text: '7. 均衡', link:'/phd/无线通信/7.均衡'},
-            {text: '8. 分集', link:'/phd/无线通信/8.分集'},
-          ]
-        },
-        {
           text: 'PyTorch',
           items: [
             { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析' }
@@ -102,6 +88,23 @@ export default defineConfig({
           text:'杂七杂八',
           items: [
             {text: 'Imuplse Function', link: '/phd/杂七杂八/Impulse Function'},
+          ]
+        },
+        {
+          text: '无线通信基础',
+          link: '/phd/无线通信/index',
+          items:[
+            {text: '1. 无线通信概论', link:'/phd/无线通信/1.无线通信概论'},
+            {text: '2. 无线电传播机制', link:'/phd/无线通信/2.无线电传播机制'},
+            {text: '3. 窄带无线信道', link:'/phd/无线通信/3.窄带无线信道'},
+            {text: '4. 宽带和方向性信道', link:'/phd/无线通信/4.宽带和方向性信道'},
+            {text: '5. 数字调制解调', link:'/phd/无线通信/5.数字调制解调'},
+            {text: '6. 信道编码', link:'/phd/无线通信/6.信道编码'},
+            {text: '7. 均衡', link:'/phd/无线通信/7.均衡'},
+            {text: '8. 分集', link:'/phd/无线通信/8.分集'},
+            {text: '9. 扩展频谱通信', link:'/phd/无线通信/9.扩频频谱通信'},
+            {text: '10. 正交频分复用', link:'/phd/无线通信/10.正交频分复用'},
+            {text: '11. 多天线技术', link:'/phd/无线通信/11.多天线技术'},
           ]
         },
       ],
