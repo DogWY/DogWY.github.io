@@ -60,7 +60,9 @@ export default defineConfig({
         {
           text: 'PyTorch',
           items: [
-            { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析' }
+            { text: 'view与reshape的比较和分析' , link: '/phd/pytorch/view与reshape的比较和分析' },
+            { text: 'optim模块速览', link: '/phd/pytorch/optim',},
+            { text: 'init模块速览', link: '/phd/pytorch/init',},
           ]
         },
         {
@@ -68,6 +70,12 @@ export default defineConfig({
           items: [
             { text: '线性模型', link: '/phd/机器学习/线性模型'},
             { text: 'Logistic回归', link: '/phd/机器学习/Logistic回归'},
+            { text: '初始化方法',
+              items: [
+                { text: '基础知识', link: '/phd/机器学习/初始化/基础知识'},
+                { text: '增益值', link: '/phd/机器学习/初始化/增益值'},
+              ]
+            },
           ]
         },
         {
