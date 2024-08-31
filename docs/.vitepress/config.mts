@@ -86,6 +86,12 @@ export default defineConfig({
           ]
         },
         {
+          text: '语义通信',
+          items:[
+            { text: '搞sc的人', link: '/phd/语义通信/搞sc的人'}
+          ]
+        },
+        {
           text: 'WiFi Sensing',
           items:[
             {text: '概述', link: '/phd/WiFi Sensing/概述'},
