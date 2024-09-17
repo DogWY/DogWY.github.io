@@ -10,3 +10,4 @@
 - 浙江大学 [张洪刚](https://scholar.google.com/citations?user=GoJ_ufAAAAAJ&hl=zh-CN&oi=ao)
 - 清华大学 [陶晓明](https://scholar.google.com/citations?hl=zh-CN&user=3Q2Ky1EAAAAJ&view_op=list_works&sortby=pubdate)
 - 新加坡科技设计大学 [Tony Q.S. Quek](https://scholar.google.com/citations?hl=zh-CN&user=0o1tkokAAAAJ&view_op=list_works&sortby=pubdate)
+- 香港中文大学 [Ying-Jun Angela Zhang](https://scholar.google.com/citations?hl=en&user=iOb3wocAAAAJ&view_op=list_works&citft=1&email_for_op=wy18811521307%40gmail.com&sortby=pubdate)
