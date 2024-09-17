@@ -1,11 +1,10 @@
-# Dirac delta function
+# Dirac Delta Function
 
 $$
-D(x) = \begin{cases} 
-1, & x \in \mathbb{Q} \\
-0, & x \notin \mathbb{Q}
+\delta(x) = \begin{cases}
+& \infty & x = 0 \\
+& 0 & x \neq 0
 \end{cases}
+\ and \ \int_{-\infty}^{\infty} \delta(x) dx = 1
 $$
-
-> $\mathbb{Q}$代表有理数
 

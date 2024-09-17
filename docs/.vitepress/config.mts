@@ -102,7 +102,7 @@ export default defineConfig({
           text:'杂七杂八',
           items: [
             {text: 'Imuplse Function', link: '/phd/杂七杂八/Impulse Function'},
-            {text: 'Dirac delta function', link: '/phd/杂七杂八/Dirac delta funtion'}
+            {text: 'Dirac delta function', link: '/phd/杂七杂八/Dirac Delta Funtion'}
           ]
         },
         {
