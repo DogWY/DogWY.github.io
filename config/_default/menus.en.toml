@@ -1,0 +1,23 @@
+[[main]]
+none = "none"
+
+[[main]]
+name = "Learning"
+pageRef = "posts/Learning"
+identifier = "ofvWMXHRCc"
+weight = 1
+
+[[main]]
+name = "Kaggle"
+pageRef = "posts/Kaggle"
+identifier = "NN4xOQFPIj"
+weight = 2
+
+[[main]]
+name = "LeetCode"
+pageRef = "posts/LeetCode"
+identifier = "vRtEglfkdW"
+weight = 3
+
+[[footer]]
+none = "none"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Learning on DogWYZone</title>
+    <link>//localhost:1313/learning/</link>
+    <description>Recent content in Learning on DogWYZone</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wangyan04221@outlook.com (DogWY)</managingEditor>
+    <webMaster>wangyan04221@outlook.com (DogWY)</webMaster>
+    <copyright>© 2026 DogWY</copyright>
+    <lastBuildDate>Tue, 28 Apr 2026 12:10:44 +0800</lastBuildDate><atom:link href="//localhost:1313/learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Test</title>
+      <link>//localhost:1313/learning/test/</link>
+      <pubDate>Tue, 28 Apr 2026 12:10:44 +0800</pubDate>
+      <author>wangyan04221@outlook.com (DogWY)</author>
+      <guid>//localhost:1313/learning/test/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="//localhost:1313/learning/test/featured.png" />
+    </item>
+    
+  </channel>
+</rss>
