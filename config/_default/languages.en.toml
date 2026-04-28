@@ -10,6 +10,12 @@ isoCode = "en"
 rtl = false
 dateFormat = "2 January 2006"
 
+[params.author]
+name = "DogWY"
+email = "wangyan04221@outlook.com"
+image = "logo.jpg"
+headline = "狗里狗气狗东西"
+
 [[params.author.links]]
 email = "wangyan04221@outlook.com"
 
@@ -18,9 +24,3 @@ github = "https://github.com/DogWY"
 
 [[params.author.links]]
 steam = "https://steamcommunity.com/profiles/76561198851976661/"
-
-["params.author"]
-name = "DogWY"
-email = "wangyan04221@outlook.com"
-image = "logo.jpg"
-headline = "狗里狗气狗东西"

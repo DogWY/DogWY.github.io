@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on DogWYZone</title>
-    <link>//localhost:1313/categories/</link>
-    <description>Recent content in Categories on DogWYZone</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <managingEditor>wangyan04221@outlook.com (DogWY)</managingEditor>
-    <webMaster>wangyan04221@outlook.com (DogWY)</webMaster>
-    <copyright>© 2026 DogWY</copyright>
-    <atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on DogWYZone</title><link>http://localhost:1313/categories/</link><description>Recent content in Categories on DogWYZone</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>wangyan04221@outlook.com (DogWY)</managingEditor><webMaster>wangyan04221@outlook.com (DogWY)</webMaster><copyright>© 2026 DogWY</copyright><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
